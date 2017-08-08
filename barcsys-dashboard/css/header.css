@@ -1,0 +1,21 @@
+.breadcrumb {
+  display: flex;
+  height: 4rem;
+  line-height: 4rem;
+  font-size: 1.5rem;
+  color: white;
+  z-index: 1102;
+  position: relative;
+  margin: auto;
+  width: fit-content;
+  width: -moz-fit-content;
+}
+
+.subbreadcrumb {
+  position: absolute;
+  font-size: 1rem;
+  line-height: 1rem;
+  width: -moz-max-content;
+  width: max-content;
+  height: 1rem;
+}

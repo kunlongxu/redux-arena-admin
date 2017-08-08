@@ -1,0 +1,12 @@
+{
+  "globalDependencies": {
+    "echarts": "registry:dt/echarts#0.0.0+20160409144419",
+    "node": "registry:dt/node#6.0.0+20161010101523",
+    "npm": "registry:dt/npm#0.0.0+20160317120654",
+    "react-bootstrap-daterangepicker": "registry:dt/react-bootstrap-daterangepicker#3.1.0+20160701061700",
+    "redux-saga": "registry:dt/redux-saga#0.9.1+20160703120921"
+  },
+  "globalDevDependencies": {
+    "rimraf": "registry:dt/rimraf#0.0.0+20160317120654"
+  }
+}
