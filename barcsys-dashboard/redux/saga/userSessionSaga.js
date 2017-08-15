@@ -47,5 +47,6 @@ function* tockenError() {
 }
 
 export default function* userSessionSaga() {
+  yield 
   yield all([fork(tockenError), fork(userLogin), fork(userLogout)]);
 }

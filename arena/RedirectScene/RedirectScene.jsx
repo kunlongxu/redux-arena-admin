@@ -5,7 +5,7 @@ import { Redirect, Switch } from "react-router-dom";
 class RedirectScene extends Component {
   render() {
     let { exact, from, to, ...rest } = this.props;
-    return <Redirect exact={exact} push={push} from={from} to={to} {...rest} />;
+    return <Redirect exact={exact} from={from} to={to} {...rest} />;
   }
 }
 

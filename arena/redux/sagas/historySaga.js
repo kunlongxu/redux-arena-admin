@@ -4,7 +4,6 @@ import { ARENA_HISTORY_PUSH, ARENA_SET_STATE } from "../actionTypes";
 
 function* historyPush({ path, isTracing }) {
   let { history } = yield select(state => state.arena);
-  alert("path")
   if (history) {
     if (isTracing) {
       let { arena, scene } = yield select(state => state);

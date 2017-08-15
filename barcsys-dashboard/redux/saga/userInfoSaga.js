@@ -3,7 +3,8 @@ import {
   FRAME_UPDATE_REFRESH,
   FRAME_USER_TOKEN_ERROR,
   PAGE_SET_CUR_MENU_DATA,
-  FRAME_PAGE_JUMP
+  FRAME_PAGE_JUMP,
+  FRAME_VALIDATE_USER
 } from "../actionTypes";
 import {
   takeLatest,
@@ -41,7 +42,7 @@ function* fetchGuardianMenu(token) {
   });
   try {
     let { data } = yield call(gGet, guardianAuth.menus + "&token=" + token);
-    console.log("code---------")
+    console.log("code---------");
     if (data != null) {
       let menusData = { path: app.contextRoot, name: "root", icon: null };
       menusData.childRoutes = changeGuardianMenuToRoute(data);
@@ -69,14 +70,13 @@ function* fetchGuardianSession(token) {
       guardianAuth.session + "?token=" + token
     );
     if (code === "success") {
-      console.log("code---------")
+      console.log("code---------");
       isSessionLegal = true;
       yield put({
         type: FRAME_UPDATE_REFRESH,
         state: { userInfo: data }
       });
     } else {
-
       yield put({
         type: FRAME_USER_TOKEN_ERROR
       });
@@ -90,10 +90,6 @@ function* fetchGuardianSession(token) {
 export function* loadUserInfoData({ token }) {
   let { rootRoute } = yield select(state => state.frame);
   let isUserInfoLegal = false;
-  yield put({
-    type: FRAME_UPDATE_REFRESH,
-    state: { isLoadingUser: true }
-  });
   if (auth.type === "local") {
     yield put({
       type: FRAME_UPDATE_REFRESH,
@@ -101,14 +97,14 @@ export function* loadUserInfoData({ token }) {
     });
     isUserInfoLegal = true;
   } else {
-    let newerToken = token
+    let newerToken = token;
     if (newerToken != null) {
-      console.log("load user menu and session")
+      console.log("load user menu and session");
       let [isMenuLegal, isSessionLegal] = yield all([
         call(fetchGuardianMenu, newerToken),
         call(fetchGuardianSession, newerToken)
       ]);
-      console.log("成功了")
+      console.log("成功了");
       isUserInfoLegal = isMenuLegal && isSessionLegal;
     } else {
       yield put({
@@ -123,6 +119,16 @@ export function* loadUserInfoData({ token }) {
   return isUserInfoLegal;
 }
 
+function* validUser({cb}) {
+  let { userInfo } = yield select(state => state.frame);
+  if (userInfo != null) {
+    cb(true);
+  } else {
+    cb(false);
+  }
+}
+
 export default function* userMenuSaga() {
+  yield takeEvery(FRAME_VALIDATE_USER, validUser);
   yield takeLatest(FRAME_LOAD_MENUDATA, loadUserInfoData);
 }

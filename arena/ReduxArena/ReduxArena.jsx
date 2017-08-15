@@ -7,6 +7,7 @@ export default class ReduxArena extends Component {
   componentWillMount() {
     this.history = createHistory(this.props);
     this.props.setArenaHistory(this.history);
+    this.props.onHistoryChange && this.props.onHistoryChange(this.history);
   }
 
   render() {
@@ -24,6 +25,7 @@ ReduxArena.propTypes = {
   basename: PropTypes.string,
   forceRefresh: PropTypes.bool,
   getUserConfirmation: PropTypes.func,
+  onHistoryChange: PropTypes.func,
   keyLength: PropTypes.number,
   children: PropTypes.any
 };

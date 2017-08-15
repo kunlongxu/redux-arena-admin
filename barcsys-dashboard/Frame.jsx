@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import * as frameActions from "./redux/frameActions";
 import Header from "./Header";
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "./displayModes";
-import { Layout, Menu, Icon, Button, Progress } from 'antd';
-import LeftNav from "./LeftNav"
+import { Layout, Menu, Icon, Button, Progress } from "antd";
+import LeftNav from "./LeftNav";
 import ReduxArena from "../arena/ReduxArena";
 const { Sider, Content } = Layout;
 class Frame extends Component {
@@ -18,11 +18,10 @@ class Frame extends Component {
     super(props);
   }
   state = {
-    collapsed: false,
+    collapsed: false
   };
   componentWillMount() {
     this.props.setRootRoute(this.props.rootRoute);
-    // this.props.registerHistory(this.props.history);
     // this.props.registerResizeHandler();
   }
 
@@ -31,9 +30,9 @@ class Frame extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (this.props.rootRoute !== nextProps.rootRoute) {
-    //   nextProps.setRootRoute(this.props.rootRoute);
-    // }
+    if (this.props.rootRoute !== nextProps.rootRoute) {
+      nextProps.setRootRoute(this.props.rootRoute);
+    }
   }
 
   render() {
@@ -47,51 +46,73 @@ class Frame extends Component {
     } = this.props;
     switch (displayMode) {
       case NOMAL_PAGE:
-        return <div style={{ height: "100%" }}>
-          <Progress
-            strokeWidth={2}
-            percent={40}
-            showInfo={false}
-            style={{ position: "absolute", zIndex: 99, fontSize: 0 }} />
-          <Layout style={{ height: "100%", flexDirection: "row" }}>
-            <LeftNav />
-            <Layout>
-              <Header />
-              <Content style={{ margin: '24px 16px', padding: "0.5rem", background: '#fff', minHeight: 280 }}>
-                <ReduxArena>
-                  {routerComs}
-                </ReduxArena>
-              </Content>
+        return (
+          <div style={{ height: "100%" }}>
+            <Progress
+              strokeWidth={2}
+              percent={40}
+              showInfo={false}
+              style={{ position: "absolute", zIndex: 99, fontSize: 0 }}
+            />
+            <Layout style={{ height: "100%", flexDirection: "row" }}>
+              <LeftNav />
+              <Layout>
+                <Header />
+                <Content
+                  style={{
+                    margin: "24px 16px",
+                    padding: "0.5rem",
+                    background: "#fff",
+                    minHeight: 280
+                  }}
+                >
+                  <ReduxArena onHistoryChange={this.props.registerHistory}>
+                    {routerComs}
+                  </ReduxArena>
+                </Content>
+              </Layout>
             </Layout>
-          </Layout>
-        </div>
+          </div>
+        );
       case FULLSCREEN:
-        return <div style={{ height: "100%" }}>
-          <Layout style={{ height: "100%", flexDirection: "row" }}>
-            <ReduxArena>
-              {routerComs}
-            </ReduxArena>
-          </Layout>
-        </div>
-      default:
-        return <div style={{ height: "100%" }}>
-          <Progress
-            strokeWidth={2}
-            percent={40}
-            showInfo={false}
-            style={{ position: "absolute", zIndex: 99, fontSize: 0 }} />
-          <Layout style={{ height: "100%", flexDirection: "row" }}>
-            <LeftNav />
-            <Layout>
-              <Header />
-              <Content style={{ margin: '24px 16px', padding: "0.5rem", background: '#fff', minHeight: 280 }}>
-                <ReduxArena>
-                  {routerComs}
-                </ReduxArena>
-              </Content>
+        return (
+          <div style={{ height: "100%" }}>
+            <Layout style={{ height: "100%", flexDirection: "row" }}>
+              <ReduxArena onHistoryChange={this.props.registerHistory}>
+                {routerComs}
+              </ReduxArena>
             </Layout>
-          </Layout>
-        </div>
+          </div>
+        );
+      default:
+        return (
+          <div style={{ height: "100%" }}>
+            <Progress
+              strokeWidth={2}
+              percent={40}
+              showInfo={false}
+              style={{ position: "absolute", zIndex: 99, fontSize: 0 }}
+            />
+            <Layout style={{ height: "100%", flexDirection: "row" }}>
+              <LeftNav />
+              <Layout>
+                <Header />
+                <Content
+                  style={{
+                    margin: "24px 16px",
+                    padding: "0.5rem",
+                    background: "#fff",
+                    minHeight: 280
+                  }}
+                >
+                  <ReduxArena onHistoryChange={this.props.registerHistory}>
+                    {routerComs}
+                  </ReduxArena>
+                </Content>
+              </Layout>
+            </Layout>
+          </div>
+        );
     }
   }
 }

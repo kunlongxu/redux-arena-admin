@@ -19,7 +19,6 @@ import {
 import { isExistPath } from "../../commons/commonFunc";
 
 function* pageJump({ url, saveState }) {
-  alert("jump")
   const {
     // jumpHistory,
     // historyPageState,

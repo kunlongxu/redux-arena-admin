@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Switch } from "react-router-dom";
-import SceneBundle from "../../SceneBundle.jsx"
+import AdminPage from "../../AdminPage"
 import RedirectScene from "../../../arena/RedirectScene"
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "../../displayModes";
 import {
@@ -43,7 +43,7 @@ function buildChildren(rootRoute, parentPath, hotReplaceData) {
   } else if (rootRoute.asyncBundle != null) {
     let { isLoginFree, component, name, path, asyncBundle } = rootRoute
     children.push(
-      <SceneBundle
+      <AdminPage
         key={absolutePath}
         path={absolutePath}
         isLoginFree={isLoginFree}

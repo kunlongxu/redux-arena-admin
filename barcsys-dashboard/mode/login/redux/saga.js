@@ -28,9 +28,10 @@ function* initUserAndJump({ token, backUrl }) {
   });
   let isUserLegal = yield* loadUserInfoData({ token });
   if (isUserLegal) {
-    yield put({ type: FRAME_PAGE_JUMP, url: backUrl });
     sessionStorage.setItem("X-Session-Token", token);
     sessionStorage.removeItem("backUrl");
+    console.log(FRAME_PAGE_JUMP)
+    yield put({ type: FRAME_PAGE_JUMP, url: backUrl });
     yield put({
       type: PAGE_UPDATE_REFRESH,
       state: {
