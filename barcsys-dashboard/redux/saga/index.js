@@ -14,16 +14,16 @@ import routerSaga from "./routerSaga";
 
 export default function* root() {
   yield all([
-    fork(pageJumpSaga),
-    fork(frameLoadPageSaga),
-    fork(pageReduxSaga),
-    fork(customReduxSaga),
-    fork(userSessionSaga),
-    fork(userInfoSaga),
+    // fork(pageJumpSaga),
+    // fork(frameLoadPageSaga),
+    // fork(pageReduxSaga),
+    // fork(customReduxSaga),
+    // fork(userSessionSaga),
+    // fork(userInfoSaga),
     fork(componentSaga),
-    fork(themeSaga),
-    fork(resizeEventSaga),
-    fork(frameLoadCommonDataSaga),
+    // fork(themeSaga),
+    // fork(resizeEventSaga),
+    // fork(frameLoadCommonDataSaga),
     fork(routerSaga)
   ]);
 }

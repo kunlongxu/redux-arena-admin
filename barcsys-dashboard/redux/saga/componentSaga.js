@@ -3,12 +3,14 @@ import {
   FRAME_SNACKBAR_ADD, FRAME_SNACKBAR_CLOSE, FRAME_SNACKBAR_CANCEL, FRAME_LEFTNAVBAR,
   PAGE_LOAD_START, PAGE_LOAD_END, FRAME_WINDOW_RESIZE
 } from '../actionTypes'
+
+import { SCENE_LOAD_START } from "../../../arena/redux/actionTypes"
 import { takeLatest, takeEvery, take, put, call, fork, select, cancelled, race } from 'redux-saga/effects'
 import { delay, eventChannel, END } from 'redux-saga'
 
 let messageQueue = [];
 
-function* navDialog({flag}) {
+function* navDialog({ flag }) {
   yield put({
     type: FRAME_UPDATE_REFRESH,
     state: {
@@ -57,9 +59,9 @@ function* hideSnackbar() {
   }
 }
 
-function* addSnackbar({payload}) {
+function* addSnackbar({ payload }) {
   payload.acceptTime = new Date().getTime();
-  let {pageBirthTime} = yield select(state => state.frame)
+  let { pageBirthTime } = yield select(state => state.frame)
   messageQueue.push(payload);
   if (payload.timeStamp == null || payload.timeStamp > pageBirthTime) {
     yield put({ type: FRAME_SNACKBAR_SHOW, })
@@ -107,7 +109,7 @@ function* pageLoadStart() {
   const chan = yield call(progress, 5)
   try {
     while (true) {
-      let {pValue, cancel} = yield race({
+      let { pValue, cancel } = yield race({
         pValue: take(chan),
         cancel: take(PAGE_LOAD_END)
       })
@@ -157,9 +159,9 @@ export function* pageLoad() {
   yield fork(pageLoadStart)
 }
 
-function* leftNavbar({flag}) {
+function* leftNavbar({ flag }) {
   if (flag == null) {
-    let {leftNavOpenFlag} = yield select(state => state.frame)
+    let { leftNavOpenFlag } = yield select(state => state.frame)
     yield put({
       type: FRAME_UPDATE_REFRESH,
       state: {
@@ -174,11 +176,13 @@ function* leftNavbar({flag}) {
       }
     })
   }
-  yield call(delay, 500);
-  yield put({
-    type: FRAME_WINDOW_RESIZE
-  })
 }
+
+function* loadPageStart() {
+  let { location } = yield select(state => state.arena)
+  console.log("displayMode", location)
+}
+
 
 export default function* componentSaga() {
   yield takeLatest(FRAME_NAV_DIALOG, navDialog);
@@ -188,4 +192,5 @@ export default function* componentSaga() {
   yield takeLatest(FRAME_SNACKBAR_CANCEL, cancelDelayFunc);
   yield takeEvery(PAGE_LOAD_START, pageLoad);
   yield takeLatest(FRAME_LEFTNAVBAR, leftNavbar);
+  yield takeEvery(SCENE_LOAD_START, loadPageStart)
 }

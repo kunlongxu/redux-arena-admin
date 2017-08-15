@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import BarcsysFrame from "barcsys-dashboard/BarcsysFrame";
-import PublicScene from "redux-arena/PublicScene";
 import pageABundle from "./pageABundle"
+import rootRoute from "./rootRoute.js"
 ReactDOM.render(
-  <BarcsysFrame>
-    <PublicScene path="/pageA" sceneBundle={pageABundle} />
-    {/* <PublicScene path="/asyncPageB" asyncSceneBundle={asyncPageB} />  */}
-  </BarcsysFrame>,
+  <BarcsysFrame rootRoute={rootRoute} />,
   document.getElementById("app")
 );

@@ -69,7 +69,7 @@ const dataAttr = {
   userAppData: []
 };
 
-const initialState = Object.assign(
+export const initialState = Object.assign(
   {},
   pageAttr,
   displayAttr,

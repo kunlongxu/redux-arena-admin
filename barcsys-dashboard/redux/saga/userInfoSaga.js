@@ -41,6 +41,7 @@ function* fetchGuardianMenu(token) {
   });
   try {
     let { data } = yield call(gGet, guardianAuth.menus + "&token=" + token);
+    console.log("code---------")
     if (data != null) {
       let menusData = { path: app.contextRoot, name: "root", icon: null };
       menusData.childRoutes = changeGuardianMenuToRoute(data);
@@ -68,12 +69,14 @@ function* fetchGuardianSession(token) {
       guardianAuth.session + "?token=" + token
     );
     if (code === "success") {
+      console.log("code---------")
       isSessionLegal = true;
       yield put({
         type: FRAME_UPDATE_REFRESH,
         state: { userInfo: data }
       });
     } else {
+
       yield put({
         type: FRAME_USER_TOKEN_ERROR
       });
@@ -98,12 +101,14 @@ export function* loadUserInfoData({ token }) {
     });
     isUserInfoLegal = true;
   } else {
-    let newerToken = token || sessionStorage.getItem("X-Session-Token");
+    let newerToken = token
     if (newerToken != null) {
+      console.log("load user menu and session")
       let [isMenuLegal, isSessionLegal] = yield all([
         call(fetchGuardianMenu, newerToken),
         call(fetchGuardianSession, newerToken)
       ]);
+      console.log("成功了")
       isUserInfoLegal = isMenuLegal && isSessionLegal;
     } else {
       yield put({

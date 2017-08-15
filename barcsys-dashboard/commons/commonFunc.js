@@ -4,9 +4,9 @@ import {
 } from "../redux/actionTypes";
 import base64 from "./base64";
 import { handleSnackbar } from "../redux/frameActions";
-// import LoginRoute from "../mode/login";
+import LoginRoute from "../mode/login";
 // import NotMatchRoute from "../mode/NotMatch";
-// import OAuthCallBackRoute from "../mode/OAuthCallBack";
+import OAuthCallBackRoute from "../mode/OAuthCallBack";
 
 export function serializeForm(formDom) {
   let keys = Object.keys(formDom);
@@ -259,10 +259,10 @@ export function mergeModeRoute(rootRoute) {
   if (newRootRoute.childRoutes == null) {
     newRootRoute.childRoutes = [];
   }
-  // newRootRoute.childRoutes = newRootRoute.childRoutes.concat([
-  //   LoginRoute,
-  //   OAuthCallBackRoute,
-  //   NotMatchRoute
-  // ]);
+  newRootRoute.childRoutes = newRootRoute.childRoutes.concat([
+    LoginRoute,
+    OAuthCallBackRoute,
+    // NotMatchRoute
+  ]);
   return newRootRoute;
 }

@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import rootSaga from "./redux/saga";
-import { createArenaStore } from "redux-arena"
+import { createArenaStore } from "../arena"
 import frameState from "./redux/frameState.js"
+import { BrowserRouter, withRouter } from "react-router-dom";
 import frameReducer from "./redux/frameReducer.js"
 import Frame from "./Frame";
 import thunk from "redux-thunk";
-import ReduxArena from "redux-arena/ReduxArena";
-
-
+import saga from "./redux/saga"
+import { mergeModeRoute } from "./commons/commonFunc";
+import { initialState } from "./redux/frameReducer.js"
 if (self === top) {
   console.log(
     "%c\
@@ -34,7 +35,8 @@ Sadlly redux is not friendly to my magical operation :(",
   );
 }
 
-const store = createArenaStore({ frame: frameReducer }, { frame: frameState }, null, [thunk]);
+const store = createArenaStore({ frame: frameReducer }, { frame: initialState }, saga, [thunk]);
+
 
 export default class BarcsysFrame extends Component {
   componentWillMount() {
@@ -43,11 +45,7 @@ export default class BarcsysFrame extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Frame>
-          <ReduxArena>
-            {this.props.children}
-          </ReduxArena>
-        </Frame>
+        <Frame rootRoute={mergeModeRoute(this.props.rootRoute)} />
       </Provider>
     );
   }

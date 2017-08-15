@@ -19,27 +19,28 @@ import {
 import { isExistPath } from "../../commons/commonFunc";
 
 function* pageJump({ url, saveState }) {
+  alert("jump")
   const {
-    jumpHistory,
-    historyPageState,
-    match,
+    // jumpHistory,
+    // historyPageState,
+    // match,
     history,
-    frameSize,
+    // frameSize,
     rootRoute,
-    isHotPatched
+    // isHotPatched
   } = yield select(state => state.frame);
-  if (isHotPatched) yield put({ type: FRAME_ROUTE_REFRESH });
-  if (saveState === true) {
-    let tmpState = yield select(state => state.page);
-    historyPageState[match.path] = Object.assign({}, tmpState);
-  } else delete historyPageState[match.path];
-  jumpHistory.push(window.location.pathname);
-  let newFrameState = {
-    jumpHistory,
-    historyPageState
-  };
-  if (frameSize !== "largeL") newFrameState.leftNavOpenFlag = false;
-  yield put({ type: FRAME_UPDATE_REFRESH, state: newFrameState });
+  // if (isHotPatched) yield put({ type: FRAME_ROUTE_REFRESH });
+  // if (saveState === true) {
+  //   let tmpState = yield select(state => state.page);
+  //   historyPageState[match.path] = Object.assign({}, tmpState);
+  // } else delete historyPageState[match.path];
+  // jumpHistory.push(window.location.pathname);
+  // let newFrameState = {
+  //   jumpHistory,
+  //   historyPageState
+  // };
+  // if (frameSize !== "largeL") newFrameState.leftNavOpenFlag = false;
+  // yield put({ type: FRAME_UPDATE_REFRESH, state: newFrameState });
   if (isExistPath(rootRoute, url)) {
     history.push(url);
   } else {

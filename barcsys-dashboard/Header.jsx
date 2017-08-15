@@ -3,18 +3,10 @@ import { bindActionCreators } from "redux";
 import { enhenceAction } from "./commons/actions";
 import { connect } from "react-redux";
 import * as frameActions from "./redux/frameActions";
-import Divider from "material-ui/Divider";
-import AppBar from "material-ui/AppBar";
-import IconButton from "material-ui/IconButton";
-import IconMenu from "material-ui/IconMenu";
-import MenuItem from "material-ui/MenuItem";
-import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
-import NavigationMenu from "material-ui/svg-icons/navigation/menu";
-import LeftNav from "./LeftNav";
-import muiThemeable from "material-ui/styles/muiThemeable";
 import headerCss from "./css/header.css";
-
-class Header extends Component {
+import { Layout, Menu, Icon } from 'antd';
+const { Header } = Layout;
+class HeaderComponent extends Component {
   constructor(props) {
     super(props);
   }
@@ -67,59 +59,82 @@ class Header extends Component {
     } = this.props;
     let headerStyle = this.calcStyle(frameSize, leftNavOpenFlag);
     return (
-      <div style={{ height: "4rem" }}>
-        <AppBar
-          title={breadcrumb.join("/")}
-          titleStyle={{ cursor: "default", WebkitUserSelect: "none" }}
-          style={headerStyle}
-          iconElementLeft={
-            <IconButton onClick={() => handleLeftNav()}>
-              <NavigationMenu />
-            </IconButton>
-          }
-          iconElementRight={
-            <IconMenu
-              iconButtonElement={
-                <IconButton>
-                  <MoreVertIcon />
-                </IconButton>
-              }
-              targetOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "top" }}
-            >
-              <MenuItem
-                style={{ cursor: "default", WebkitUserSelect: "none" }}
-                primaryText={"Loading" && userInfo && userInfo.name}
-              />
-              <MenuItem
-                style={{ cursor: "default", WebkitUserSelect: "none" }}
-                onClick={logout}
-                primaryText="登出"
-              />
-              <Divider />
-              {themeType === "light"
-                ? <MenuItem
-                  style={{ cursor: "default", WebkitUserSelect: "none" }}
-                  onClick={() => setTheme("dark")}
-                  primaryText="切换dark主题"
-                />
-                : <MenuItem
-                  style={{ cursor: "default", WebkitUserSelect: "none" }}
-                  onClick={() => setTheme("light")}
-                  primaryText="切换light主题"
-                />}
-              <MenuItem
-                style={{ cursor: "default", WebkitUserSelect: "none" }}
-                onClick={() => jumpTo("/")}
-                primaryText="返回首页"
-              />
-            </IconMenu>
-          }
-        >
+      // <div style={{ height: "4rem" }}>
+      //   <AppBar
+      //     title={breadcrumb.join("/")}
+      //     titleStyle={{ cursor: "default", WebkitUserSelect: "none" }}
+      //     style={headerStyle}
+      //     iconElementLeft={
+      //       <IconButton onClick={() => handleLeftNav()}>
+      //         <NavigationMenu />
+      //       </IconButton>
+      //     }
+      //     iconElementRight={
+      //       <IconMenu
+      //         iconButtonElement={
+      //           <IconButton>
+      //             <MoreVertIcon />
+      //           </IconButton>
+      //         }
+      //         targetOrigin={{ horizontal: "right", vertical: "top" }}
+      //         anchorOrigin={{ horizontal: "right", vertical: "top" }}
+      //       >
+      //         <MenuItem
+      //           style={{ cursor: "default", WebkitUserSelect: "none" }}
+      //           primaryText={"Loading" && userInfo && userInfo.name}
+      //         />
+      //         <MenuItem
+      //           style={{ cursor: "default", WebkitUserSelect: "none" }}
+      //           onClick={logout}
+      //           primaryText="登出"
+      //         />
+      //         <Divider />
+      //         {themeType === "light"
+      //           ? <MenuItem
+      //             style={{ cursor: "default", WebkitUserSelect: "none" }}
+      //             onClick={() => setTheme("dark")}
+      //             primaryText="切换dark主题"
+      //           />
+      //           : <MenuItem
+      //             style={{ cursor: "default", WebkitUserSelect: "none" }}
+      //             onClick={() => setTheme("light")}
+      //             primaryText="切换light主题"
+      //           />}
+      //         <MenuItem
+      //           style={{ cursor: "default", WebkitUserSelect: "none" }}
+      //           onClick={() => jumpTo("/")}
+      //           primaryText="返回首页"
+      //         />
+      //       </IconMenu>
+      //     }
+      //   >
 
-          <LeftNav />
-        </AppBar>
-      </div>
+      //     <LeftNav />
+      //   </AppBar>
+      // </div>
+      <Header style={{ padding: 0, display: "flex" }}>
+        <Icon
+          style={{
+            alignSelf: "center",
+            fontSize: "18px",
+            color: "#fff",
+            padding: "0 20px",
+            cursor: "pointer"
+          }}
+          type={leftNavOpenFlag ? 'menu-unfold' : 'menu-fold'}
+          onClick={() => handleLeftNav()}
+        />
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['2']}
+          style={{ lineHeight: '64px', marginLeft: "3rem" }}
+        >
+          <Menu.Item key="1">黑名单监控</Menu.Item>
+          <Menu.Item key="2">反洗钱</Menu.Item>
+          <Menu.Item key="3">微财富</Menu.Item>
+        </Menu>
+      </Header>
     );
   }
 }
@@ -142,6 +157,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(enhenceAction(frameActions), dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  muiThemeable()(Header)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

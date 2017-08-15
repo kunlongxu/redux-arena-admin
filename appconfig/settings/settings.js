@@ -3,7 +3,7 @@ exports.auth = {
 };
 
 exports.app = {
-  contextRoot: "collie",
-  logo: "CollieLogo",
-  appName: "统一配置系统"
+  contextRoot: "arena",
+  logo: "",
+  appName: ""
 };

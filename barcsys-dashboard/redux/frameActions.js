@@ -70,7 +70,7 @@ export function handleSnackbar(
 
 export function registerResizeHandler() {
   return (dispatch, getState) => {
-    let resizeHandler = function(event) {
+    let resizeHandler = function (event) {
       dispatch({
         type: FRAME_WINDOW_RESIZE
       });

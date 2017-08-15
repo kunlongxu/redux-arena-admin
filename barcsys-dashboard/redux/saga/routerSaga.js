@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Switch } from "react-router-dom";
-import PrivateRoute from "../../PrivateRoute";
-import PublicRoute from "../../PublicRoute";
+import SceneBundle from "../../SceneBundle.jsx"
+import RedirectScene from "../../../arena/RedirectScene"
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "../../displayModes";
 import {
   FRAME_UPDATE_REFRESH,
@@ -33,51 +33,24 @@ function buildChildren(rootRoute, parentPath, hotReplaceData) {
   }
   if (rootRoute.indexRoutePath != null) {
     children.push(
-      <Redirect
+      <RedirectScene
         key={absolutePath}
         exact
         from={absolutePath}
         to={rootRoute.indexRoutePath}
       />
     );
-  } else if (rootRoute.component != null) {
-    if (rootRoute.isLoginFree == true) {
-      children.push(
-        <PublicRoute
-          key={absolutePath}
-          exact
-          path={absolutePath}
-          component={({ match, location, history }) =>
-            <rootRoute.component
-              {...{
-                match,
-                location,
-                history,
-                displayMode: rootRoute.displayMode || NOMAL_PAGE,
-                hotReplaceData: curPathHRData
-              }}
-            />}
-        />
-      );
-    } else {
-      children.push(
-        <PrivateRoute
-          key={absolutePath}
-          exact
-          path={absolutePath}
-          component={({ match, location, history }) =>
-            <rootRoute.component
-              {...{
-                match,
-                location,
-                history,
-                displayMode: rootRoute.displayMode || NOMAL_PAGE,
-                hotReplaceData: curPathHRData
-              }}
-            />}
-        />
-      );
-    }
+  } else if (rootRoute.asyncBundle != null) {
+    let { isLoginFree, component, name, path, asyncBundle } = rootRoute
+    children.push(
+      <SceneBundle
+        key={absolutePath}
+        path={absolutePath}
+        isLoginFree={isLoginFree}
+        displayMode={rootRoute.displayMode || NOMAL_PAGE}
+        asyncSceneBundle={asyncBundle}
+      />
+    );
   }
   if (rootRoute.childRoutes != null) {
     children = rootRoute.childRoutes
@@ -88,7 +61,6 @@ function buildChildren(rootRoute, parentPath, hotReplaceData) {
   }
   return children;
 }
-
 function* setRootRoute({ rootRoute }) {
   yield put({
     type: FRAME_UPDATE_REFRESH,
