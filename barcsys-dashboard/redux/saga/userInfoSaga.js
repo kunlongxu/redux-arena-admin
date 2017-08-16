@@ -89,6 +89,10 @@ function* fetchGuardianSession(token) {
 
 export function* loadUserInfoData({ token }) {
   let { rootRoute } = yield select(state => state.frame);
+  // yield put({
+  //   type: FRAME_UPDATE_REFRESH,
+  //   state: { isLoadingUser: true }
+  // });
   let isUserInfoLegal = false;
   if (auth.type === "local") {
     yield put({
@@ -119,8 +123,11 @@ export function* loadUserInfoData({ token }) {
   return isUserInfoLegal;
 }
 
-function* validUser({cb}) {
-  let { userInfo } = yield select(state => state.frame);
+function* validUser({ cb }) {
+  let { userInfo, isLoadingUser } = yield select(state => state.frame);
+  if (userInfo == null && isLoadingUser === false) {
+    sessionStorage.setItem("backUrl", window.location.pathname);
+  }
   if (userInfo != null) {
     cb(true);
   } else {

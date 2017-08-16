@@ -28,6 +28,7 @@ function* pageJump({ url, saveState }) {
     rootRoute,
     // isHotPatched
   } = yield select(state => state.frame);
+  console.log(history, url)
   // if (isHotPatched) yield put({ type: FRAME_ROUTE_REFRESH });
   // if (saveState === true) {
   //   let tmpState = yield select(state => state.page);

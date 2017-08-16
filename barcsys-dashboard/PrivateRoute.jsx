@@ -7,7 +7,6 @@ import { app } from "appconfig/settings";
 
 class PrivateRoute extends Component {
   componentWillMount() {
-    console.log("render")
     if (this.props.userInfo == null && this.props.isLoadingUser === false) {
       sessionStorage.setItem("backUrl", window.location.pathname);
       this.props.jumpTo("/" + app.contextRoot + "/login", true);

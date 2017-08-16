@@ -10,6 +10,8 @@ import thunk from "redux-thunk";
 import saga from "./redux/saga"
 import { mergeModeRoute } from "./commons/commonFunc";
 import { initialState } from "./redux/frameReducer.js"
+import ReduxArena from "../arena/ReduxArena";
+import { connect } from "react-redux";
 if (self === top) {
   console.log(
     "%c\
@@ -45,7 +47,9 @@ export default class BarcsysFrame extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Frame rootRoute={mergeModeRoute(this.props.rootRoute)} />
+        <ReduxArena>
+          <Frame rootRoute={mergeModeRoute(this.props.rootRoute)} />
+        </ReduxArena>
       </Provider>
     );
   }

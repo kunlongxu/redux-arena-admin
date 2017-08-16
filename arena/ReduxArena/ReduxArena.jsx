@@ -7,15 +7,12 @@ export default class ReduxArena extends Component {
   componentWillMount() {
     this.history = createHistory(this.props);
     this.props.setArenaHistory(this.history);
-    this.props.onHistoryChange && this.props.onHistoryChange(this.history);
   }
 
   render() {
     return (
       <Router history={this.history}>
-        <Switch>
-          {this.props.children}
-        </Switch>
+        {this.props.children}
       </Router>
     );
   }

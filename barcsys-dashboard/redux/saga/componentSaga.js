@@ -178,9 +178,9 @@ function* leftNavbar({ flag }) {
   }
 }
 
-function* loadPageStart() {
-  let { location } = yield select(state => state.arena)
-  console.log("displayMode", location)
+function* loadPageStart({ location, match }) {
+  // let { routerComs } = yield select(state => state.arena)
+  // console.log("displayMode", location)
 }
 
 

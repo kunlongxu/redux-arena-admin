@@ -28,9 +28,12 @@ class AdminPage extends Component {
         exact
         {...{ path, asyncSceneBundle }}
         onValidate={cb => validateUser(cb)}
-        onPass={() => {}}
+        onPass={() => {
+          console.log("onValidate====================")
+        }}
         onReject={() => {
-          jumpTo("/" + app.contextRoot + "/login");
+          this.props.history.push(app.contextRoot + "/login")
+          console.log("onReject------------------")
         }}
       />
     );
