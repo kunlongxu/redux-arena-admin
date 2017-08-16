@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import rootSaga from "./redux/saga";
-import { createArenaStore } from "../arena"
-import frameState from "./redux/frameState.js"
-import { BrowserRouter, withRouter } from "react-router-dom";
-import frameReducer from "./redux/frameReducer.js"
+import { createArenaStore } from "../arena";
+import frameState from "./redux/frameState.js";
+import { withRouter } from "react-router-dom";
+import frameReducer from "./redux/frameReducer.js";
 import Frame from "./Frame";
 import thunk from "redux-thunk";
-import saga from "./redux/saga"
+import saga from "./redux/saga";
 import { mergeModeRoute } from "./commons/commonFunc";
-import { initialState } from "./redux/frameReducer.js"
-import ReduxArena from "../arena/ReduxArena";
+import { initialState } from "./redux/frameReducer.js";
+import { Router } from "react-router-dom";
 import { connect } from "react-redux";
+import createHistory from "history/createBrowserHistory";
 if (self === top) {
   console.log(
     "%c\
@@ -37,8 +38,14 @@ Sadlly redux is not friendly to my magical operation :(",
   );
 }
 
-const store = createArenaStore({ frame: frameReducer }, { frame: initialState }, saga, [thunk]);
-
+const store = createArenaStore(
+  { frame: frameReducer },
+  { frame: initialState },
+  saga,
+  [thunk]
+);
+const history = createHistory();
+store.setHistory(history);
 
 export default class BarcsysFrame extends Component {
   componentWillMount() {
@@ -47,9 +54,9 @@ export default class BarcsysFrame extends Component {
   render() {
     return (
       <Provider store={store}>
-        <ReduxArena>
+        <Router history={history}>
           <Frame rootRoute={mergeModeRoute(this.props.rootRoute)} />
-        </ReduxArena>
+        </Router>
       </Provider>
     );
   }

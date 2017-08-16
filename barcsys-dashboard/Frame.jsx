@@ -7,10 +7,10 @@ import Header from "./Header";
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "./displayModes";
 import { Layout, Menu, Icon, Button, Progress } from "antd";
 import { withRouter } from "react-router-dom";
+import SceneSwitch from "../arena/SceneSwitch";
 import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;
-
 
 @withRouter
 class Frame extends Component {
@@ -23,9 +23,8 @@ class Frame extends Component {
   }
   componentWillMount() {
     this.props.setRootRoute(this.props.rootRoute);
-    this.props.registerHistory(this.props.history)
+    this.props.registerHistory(this.props.history);
     // this.props.registerResizeHandler();
-
   }
 
   // componentWillUnmount() {
@@ -38,8 +37,10 @@ class Frame extends Component {
     }
   }
   findDisMode(routerComs, location) {
-    let curItem = routerComs.find(i => i.path == location.pathname)
-    return curItem ? curItem.displayMode ? curItem.displayMode : NOMAL_PAGE : NOMAL_PAGE
+    let curItem = routerComs.find(i => i.path == location.pathname);
+    return curItem
+      ? curItem.displayMode ? curItem.displayMode : NOMAL_PAGE
+      : NOMAL_PAGE;
   }
   render() {
     let {
@@ -51,8 +52,8 @@ class Frame extends Component {
       match,
       location
     } = this.props;
-    console.log(routerComs, location, "-----------------frame")
-    let displayMode = this.findDisMode(routerComs, location)
+    console.log(routerComs, location, "-----------------frame");
+    let displayMode = this.findDisMode(routerComs, location);
     switch (displayMode) {
       case ONLY_HEADER:
         return (
@@ -73,7 +74,9 @@ class Frame extends Component {
                   minHeight: 280
                 }}
               >
-                {routerComs}
+                <SceneSwitch>
+                  {routerComs}
+                </SceneSwitch>
               </Content>
             </Layout>
           </div>
@@ -82,7 +85,9 @@ class Frame extends Component {
         return (
           <div style={{ height: "100%" }}>
             <Layout style={{ height: "100%", flexDirection: "row" }}>
-              {routerComs}
+              <SceneSwitch>
+                {routerComs}
+              </SceneSwitch>
             </Layout>
           </div>
         );
@@ -107,7 +112,9 @@ class Frame extends Component {
                     minHeight: 280
                   }}
                 >
-                  {routerComs}
+                  <SceneSwitch>
+                    {routerComs}
+                  </SceneSwitch>
                 </Content>
               </Layout>
             </Layout>

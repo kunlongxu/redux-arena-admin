@@ -20,6 +20,7 @@ class AdminPage extends Component {
       validateUser,
       jumpTo
     } = this.props;
+    console.log(isLoginFree)
     if (isLoginFree) {
       return <PublicScene exact {...{ path, asyncSceneBundle }} />;
     }
@@ -29,11 +30,11 @@ class AdminPage extends Component {
         {...{ path, asyncSceneBundle }}
         onValidate={cb => validateUser(cb)}
         onPass={() => {
-          console.log("onValidate====================")
+          console.log("onValidate====================");
         }}
         onReject={() => {
-          this.props.history.push(app.contextRoot + "/login")
-          console.log("onReject------------------")
+          this.props.jumpTo("/" + app.contextRoot + "/login");
+          console.log("onReject------------------");
         }}
       />
     );
