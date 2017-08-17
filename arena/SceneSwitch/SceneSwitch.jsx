@@ -7,6 +7,7 @@ export default class SceneSwitch extends Component {
   componentWillMount() {}
 
   render() {
+    console.log(123213)
     return (
       <Switch>
         {this.props.children}

@@ -46,6 +46,7 @@ function buildChildren(rootRoute, parentPath, hotReplaceData) {
       <AdminPage
         key={absolutePath}
         path={absolutePath}
+        exact
         isLoginFree={isLoginFree}
         displayMode={rootRoute.displayMode || NOMAL_PAGE}
         asyncSceneBundle={asyncBundle}

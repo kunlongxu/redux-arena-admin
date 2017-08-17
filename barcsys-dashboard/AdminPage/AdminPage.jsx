@@ -11,16 +11,21 @@ import * as actions from "./actions";
 
 @withRouter
 class AdminPage extends Component {
+  onReject = () => {
+    console.log("onReject");
+    sessionStorage.setItem("backUrl", window.location.pathname);
+    this.props.jumpTo("/" + app.contextRoot + "/login");
+  };
+
   render() {
     let {
       isLoginFree,
-      match,
       asyncSceneBundle,
       path,
       validateUser,
       jumpTo
     } = this.props;
-    console.log(isLoginFree)
+    console.log(isLoginFree, path);
     if (isLoginFree) {
       return <PublicScene exact {...{ path, asyncSceneBundle }} />;
     }
@@ -32,10 +37,7 @@ class AdminPage extends Component {
         onPass={() => {
           console.log("onValidate====================");
         }}
-        onReject={() => {
-          this.props.jumpTo("/" + app.contextRoot + "/login");
-          console.log("onReject------------------");
-        }}
+        onReject={this.onReject}
       />
     );
   }
@@ -46,9 +48,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return {
-    match: state.frame.match
-  };
+  return {};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminPage);

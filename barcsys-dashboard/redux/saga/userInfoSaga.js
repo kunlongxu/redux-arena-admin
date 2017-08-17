@@ -42,7 +42,6 @@ function* fetchGuardianMenu(token) {
   });
   try {
     let { data } = yield call(gGet, guardianAuth.menus + "&token=" + token);
-    console.log("code---------");
     if (data != null) {
       let menusData = { path: app.contextRoot, name: "root", icon: null };
       menusData.childRoutes = changeGuardianMenuToRoute(data);

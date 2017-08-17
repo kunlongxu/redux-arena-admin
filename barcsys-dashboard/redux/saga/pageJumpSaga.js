@@ -25,10 +25,17 @@ function* pageJump({ url, saveState }) {
     // match,
     history,
     // frameSize,
-    rootRoute,
     // isHotPatched
   } = yield select(state => state.arena);
-  console.log(history, url)
+  const {
+    // jumpHistory,
+    // historyPageState,
+    // match,
+    // frameSize,
+    rootRoute
+    // isHotPatched
+  } = yield select(state => state.frame);
+  console.log(history, url);
   // if (isHotPatched) yield put({ type: FRAME_ROUTE_REFRESH });
   // if (saveState === true) {
   //   let tmpState = yield select(state => state.page);

@@ -46,7 +46,7 @@ const store = createArenaStore(
 );
 const history = createHistory();
 store.setHistory(history);
-
+window.routerHistory=history
 export default class BarcsysFrame extends Component {
   componentWillMount() {
     document.getElementById("app").className = "fullHeight";

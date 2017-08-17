@@ -19,18 +19,19 @@ import { loadUserInfoData } from "barcsys-dashboard/redux/saga/userInfoSaga";
 import { LOGIN_INITUSER_JUMP } from "./actionTypes";
 
 function* initUserAndJump({ token, backUrl }) {
-  if (!token) return
+  if (!token) return;
   yield put({
     type: PAGE_UPDATE_REFRESH,
     state: {
       isUserLegal: "pending"
     }
   });
+  console.log("isUserLegal", 123);
   let isUserLegal = yield* loadUserInfoData({ token });
+  console.log("isUserLegal", isUserLegal);
   if (isUserLegal) {
     sessionStorage.setItem("X-Session-Token", token);
     sessionStorage.removeItem("backUrl");
-    console.log(FRAME_PAGE_JUMP)
     yield put({ type: FRAME_PAGE_JUMP, url: backUrl });
     yield put({
       type: PAGE_UPDATE_REFRESH,

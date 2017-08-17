@@ -11,8 +11,6 @@ import SceneSwitch from "../arena/SceneSwitch";
 import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;
-
-@withRouter
 class Frame extends Component {
   // static propTypes = {
   //   history: PropTypes.object.isRequired
@@ -54,6 +52,7 @@ class Frame extends Component {
     } = this.props;
     console.log(routerComs, location, "-----------------frame");
     let displayMode = this.findDisMode(routerComs, location);
+    console.log(top===window)
     switch (displayMode) {
       case ONLY_HEADER:
         return (
@@ -109,7 +108,8 @@ class Frame extends Component {
                     margin: "24px 16px",
                     padding: "0.5rem",
                     background: "#fff",
-                    minHeight: 280
+                    minHeight: 280,
+                    height: "100%"
                   }}
                 >
                   <SceneSwitch>
@@ -128,8 +128,6 @@ function mapStateToProps(state) {
   return {
     history: state.arena.history,
     snackbar: state.frame.snackbar,
-    // match: state.frame.match,
-    userInfo: state.frame.userInfo,
     pageLoading: state.frame.pageLoading,
     displayMode: state.frame.displayMode,
     routerComs: state.frame.routerComs
@@ -140,4 +138,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(frameActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Frame);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Frame));
