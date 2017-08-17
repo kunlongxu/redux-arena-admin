@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import * as actions from "./redux/actions";
 import { guardianOAuthUrl } from "appconfig/apiUrl";
-import { enhenceAction } from "barcsys-dashboard/commons/actions";
 import { app } from "appconfig/settings";
 
-class LoginFrame extends Component {
+export default class LoginFrame extends Component {
   constructor(props) {
     super(props);
   }
@@ -38,16 +36,3 @@ class LoginFrame extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    userInfo: state.frame.userInfo,
-    location: state.frame.location
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(enhenceAction(actions), dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginFrame)

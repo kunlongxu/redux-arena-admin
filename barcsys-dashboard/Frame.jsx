@@ -21,7 +21,6 @@ class Frame extends Component {
   }
   componentWillMount() {
     this.props.setRootRoute(this.props.rootRoute);
-    this.props.registerHistory(this.props.history);
     // this.props.registerResizeHandler();
   }
 
@@ -50,9 +49,7 @@ class Frame extends Component {
       match,
       location
     } = this.props;
-    console.log(routerComs, location, "-----------------frame");
     let displayMode = this.findDisMode(routerComs, location);
-    console.log(top===window)
     switch (displayMode) {
       case ONLY_HEADER:
         return (

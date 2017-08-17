@@ -1,82 +1,103 @@
 import {
-  ARENA_SWITCH_SCENE,
-  ARENA_LOAD_ASYNCSCENE,
+  SCENESWITCH_SWITCH_SCENE,
+  SCENESWITCH_LOAD_ASYNCSCENE,
   SCENE_LOAD_START,
   SCENE_PLAY_START,
   SCENE_PLAY_END,
-  SCENE_LOAD_END
+  SCENE_LOAD_END,
+  SCENE_CLEAR_REDUX
 } from "../../redux/actionTypes";
 
-export function ArenaLoadScene(
+export function SceneSwitchLoadScene(
+  sceneSwitchKey,
   sceneBundle,
-  match,
-  location,
   OldPlayingScene,
-  sceneNo
+  sceneNo,
+  setReduxInfo
 ) {
   return {
-    type: ARENA_SWITCH_SCENE,
+    type: SCENESWITCH_SWITCH_SCENE,
+    sceneSwitchKey,
     sceneBundle,
-    match,
-    location,
     OldPlayingScene,
-    sceneNo
+    sceneNo,
+    setReduxInfo
   };
 }
 
 export function arenaLoadAsyncScene(
+  sceneSwitchKey,
   asyncSceneBundle,
-  match,
-  location,
   OldPlayingScene,
-  sceneNo
+  sceneNo,
+  setReduxInfo
 ) {
   return {
-    type: ARENA_LOAD_ASYNCSCENE,
+    type: SCENESWITCH_LOAD_ASYNCSCENE,
+    sceneSwitchKey,
     asyncSceneBundle,
-    match,
-    location,
     OldPlayingScene,
-    sceneNo
+    sceneNo,
+    setReduxInfo
   };
 }
 
-export function sceneLoadStart(match, location, sceneBundle, asyncSceneBundle) {
+export function sceneLoadStart(
+  sceneSwitchKey,
+  sceneBundle,
+  asyncSceneBundle
+) {
   return {
     type: SCENE_LOAD_START,
-    match,
-    location,
+    sceneSwitchKey,
     sceneBundle,
     asyncSceneBundle
   };
 }
 
-export function sceneStartPlay(match, location, sceneBundle, asyncSceneBundle) {
+export function sceneStartPlay(
+  sceneSwitchKey,
+  sceneBundle,
+  asyncSceneBundle
+) {
   return {
     type: SCENE_PLAY_START,
-    match,
-    location,
+    sceneSwitchKey,
     sceneBundle,
     asyncSceneBundle
   };
 }
 
-export function sceneLoadEnd(match, location, sceneBundle, asyncSceneBundle) {
+export function sceneLoadEnd(
+  sceneSwitchKey,
+  sceneBundle,
+  asyncSceneBundle
+) {
   return {
     type: SCENE_LOAD_END,
-    match,
-    location,
+    sceneSwitchKey,
     sceneBundle,
     asyncSceneBundle
   };
 }
 
-export function sceneStopPlay(match, location, sceneBundle, asyncSceneBundle) {
+export function sceneStopPlay(
+  sceneSwitchKey,
+  sceneBundle,
+  asyncSceneBundle
+) {
   return {
     type: SCENE_PLAY_END,
-    match,
-    location,
+    sceneSwitchKey,
     sceneBundle,
     asyncSceneBundle
   };
+}
+
+export function clearSceneRedux(reduxInfoPromise) {
+  if (reduxInfoPromise != null)
+    return {
+      type: SCENE_CLEAR_REDUX,
+      reduxInfoPromise
+    };
 }

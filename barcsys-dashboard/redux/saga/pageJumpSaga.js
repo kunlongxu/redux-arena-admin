@@ -3,7 +3,6 @@ import {
   FRAME_UPDATE_REFRESH,
   FRAME_UPDATE_NOREFRESH,
   FRAME_ROUTE_REFRESH,
-  FRAME_HISTORY_REGISTER,
   FRAME_PAGE_BACKWARD,
   FRAME_PAGE_REFRESH
 } from "../actionTypes";
@@ -24,18 +23,11 @@ function* pageJump({ url, saveState }) {
     // historyPageState,
     // match,
     history,
-    // frameSize,
-    // isHotPatched
-  } = yield select(state => state.arena);
-  const {
-    // jumpHistory,
-    // historyPageState,
-    // match,
-    // frameSize,
     rootRoute
+    // frameSize,
     // isHotPatched
   } = yield select(state => state.frame);
-  console.log(history, url);
+  console.log(yield select(state => state.frame));
   // if (isHotPatched) yield put({ type: FRAME_ROUTE_REFRESH });
   // if (saveState === true) {
   //   let tmpState = yield select(state => state.page);
@@ -71,8 +63,6 @@ function* pageBackward() {
 }
 
 export default function* framePageJumpSaga() {
-  const { history } = yield take(FRAME_HISTORY_REGISTER);
-  yield put({ type: FRAME_UPDATE_NOREFRESH, state: { history } });
   yield takeLatest(FRAME_PAGE_JUMP, pageJump);
   yield fork(pageBackward);
 }
