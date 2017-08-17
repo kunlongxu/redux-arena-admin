@@ -1,9 +1,14 @@
 /* eslint-disable no-constant-condition */
-import { fork, all } from "redux-saga/effects";
+import { fork, all, setContext } from "redux-saga/effects";
 import senceSwitchSaga from "./senceSwitchSaga";
 import audienceSaga from "./audienceSaga";
-import historySaga from "./historySaga";
+import sceneSaga from "./sceneSaga";
 
-export default function* root() {
-  yield all([fork(senceSwitchSaga), fork(audienceSaga), fork(historySaga)]);
+export default function* root(ctx) {
+  yield setContext(ctx);
+  yield all([
+    fork(audienceSaga),
+    fork(senceSwitchSaga),
+    fork(sceneSaga)
+  ]);
 }

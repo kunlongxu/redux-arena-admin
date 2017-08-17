@@ -1,50 +1,42 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import { ARENA_INIT_AUDIENCE_SAGA, ARENA_SET_STATE } from "./actionTypes";
+import { ARENA_INIT_AUDIENCE_SAGA } from "./actionTypes";
 import createSagaMiddleware, { END } from "redux-saga";
-import {
-  getSceneInitState,
-  getArenaInitState,
-  arenaReducer,
-  createSenceReducer
-} from "./reducers";
+import { getArenaInitState, arenaReducer } from "./reducers";
 import rootSaga from "./sagas";
 
-const rootReducer = {
-  arena: arenaReducer,
-  scene: createSenceReducer()
+let currentReducers = {
+  arena: arenaReducer
 };
 
 const rootState = {
-  arena: getArenaInitState(),
-  scene: getSceneInitState()
+  arena: getArenaInitState()
 };
 
-function createProxyStore(store, audienceReducer) {
+function createProxyStore(store) {
   const handler = {
     get: function(target, name) {
-      if (name === "replaceReducer") {
-        return reducer => {
-          let newReducer = Object.assign(
-            {},
-            rootReducer,
-            audienceReducer,
-            reducer
-          );
-          let state = target.getState();
-          for (let key in state) {
-            if (newReducer[key] == null) delete state[key];
-          }
-          return target.replaceReducer(combineReducers(newReducer));
+      if (name === "addReducer") {
+        return ({ reducerKey, reducer, state }) => {
+          let allStates = target.getState();
+          if (allStates[reducerKey] != null) return false;
+          allStates[reducerKey] = state;
+          currentReducers = Object.assign({}, currentReducers, {
+            [reducerKey]: reducer
+          });
+          target.replaceReducer(combineReducers(currentReducers));
+          return true;
         };
       }
-      if (name === "setHistory") {
-        return history =>
-          store.dispatch({
-            type: ARENA_SET_STATE,
-            state: {
-              history
-            }
-          });
+      if (name === "removeReducer") {
+        return reducerKey => {
+          if (reducerKey == null) return;
+          let newReducers = Object.assign({}, currentReducers);
+          let allStates = target.getState();
+          delete allStates[reducerKey];
+          delete newReducers[reducerKey];
+          currentReducers = newReducers;
+          target.replaceReducer(combineReducers(newReducers));
+        };
       }
       return target[name];
     }
@@ -59,18 +51,18 @@ export function createArenaStore(
   milldewares = []
 ) {
   const sagaMiddleware = createSagaMiddleware();
+  currentReducers = Object.assign({}, currentReducers, reducer);
   const store = createProxyStore(
     createStore(
-      combineReducers(Object.assign({}, rootReducer, reducer)),
+      combineReducers(currentReducers),
       Object.assign({}, rootState, initialState),
       applyMiddleware(...[sagaMiddleware].concat(milldewares))
-    ),
-    reducer
+    )
   );
   window.arenaStore = store;
   store.runSaga = sagaMiddleware.run;
   store.close = () => store.dispatch(END);
-  store.runSaga(rootSaga);
+  store.runSaga(rootSaga, { store });
   if (saga)
     store.dispatch({
       type: ARENA_INIT_AUDIENCE_SAGA,

@@ -7,10 +7,8 @@ import { auth } from "appconfig/settings";
 import { guardianUrl, contextRoot } from "appconfig/apiUrl";
 import { enhenceAction } from "barcsys-dashboard/commons/actions";
 import { parse as queryStringParse } from "query-string";
-import { withRouter } from "react-router-dom";
 
-@withRouter
-class OAuthCallBack extends Component {
+export default class OAuthCallBack extends Component {
   componentWillMount() {
     let { location } = this.props;
     this.checkTokenAndInitUser(location);
@@ -71,15 +69,3 @@ class OAuthCallBack extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    location: state.frame.location
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(enhenceAction(actions), dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(OAuthCallBack);

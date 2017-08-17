@@ -38,15 +38,14 @@ Sadlly redux is not friendly to my magical operation :(",
   );
 }
 
+const history = createHistory();
+console.log({ frame: Object.assign({}, initialState, { history }) })
 const store = createArenaStore(
   { frame: frameReducer },
-  { frame: initialState },
+  { frame: Object.assign({}, initialState, { history }) },
   saga,
   [thunk]
 );
-const history = createHistory();
-store.setHistory(history);
-
 export default class BarcsysFrame extends Component {
   componentWillMount() {
     document.getElementById("app").className = "fullHeight";

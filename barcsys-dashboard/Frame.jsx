@@ -11,8 +11,6 @@ import SceneSwitch from "../arena/SceneSwitch";
 import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;
-
-// @withRouter
 class Frame extends Component {
   // static propTypes = {
   //   history: PropTypes.object.isRequired
@@ -23,7 +21,6 @@ class Frame extends Component {
   }
   componentWillMount() {
     this.props.setRootRoute(this.props.rootRoute);
-    this.props.registerHistory(this.props.history);
     // this.props.registerResizeHandler();
   }
 
@@ -110,7 +107,8 @@ class Frame extends Component {
                     margin: "24px 16px",
                     padding: "0.5rem",
                     background: "#fff",
-                    minHeight: 280
+                    minHeight: 280,
+                    height: "100%"
                   }}
                 >
                   <SceneSwitch>
@@ -129,7 +127,6 @@ function mapStateToProps(state) {
   return {
     history: state.arena.history,
     snackbar: state.frame.snackbar,
-    userInfo: state.frame.userInfo,
     pageLoading: state.frame.pageLoading,
     // displayMode: state.frame.displayMode,
     routerComs: state.frame.routerComs

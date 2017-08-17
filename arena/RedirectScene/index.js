@@ -1,3 +1,3 @@
-import RedirectScene from "./RedirectScene.jsx"
+import RedirectScene from "./RedirectScene";
 
-export default RedirectScene
+export default RedirectScene;

@@ -7,7 +7,6 @@ import {
   FRAME_SNACKBAR_ADD,
   FRAME_REFRESH,
   PAGE_REFRESH,
-  FRAME_HISTORY_REGISTER,
   FRAME_USER_LOGOUT,
   FRAME_CHANGE_THEME,
   FRAME_LEFTNAVBAR,
@@ -24,13 +23,6 @@ export function setTheme(themeType) {
   return {
     type: FRAME_CHANGE_THEME,
     themeType
-  };
-}
-
-export function registerHistory(history) {
-  return {
-    type: FRAME_HISTORY_REGISTER,
-    history
   };
 }
 
