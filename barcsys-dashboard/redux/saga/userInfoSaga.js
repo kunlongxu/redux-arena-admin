@@ -116,10 +116,10 @@ export function* loadUserInfoData({ token }) {
       });
     }
   }
-  yield put({
-    type: FRAME_UPDATE_REFRESH,
-    state: { isLoadingUser: false }
-  });
+  // yield put({
+  //   type: FRAME_UPDATE_REFRESH,
+  //   state: { isLoadingUser: false }
+  // });
   return isUserInfoLegal;
 }
 

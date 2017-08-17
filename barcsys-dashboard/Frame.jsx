@@ -12,7 +12,7 @@ import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;
 
-@withRouter
+// @withRouter
 class Frame extends Component {
   // static propTypes = {
   //   history: PropTypes.object.isRequired
@@ -37,9 +37,10 @@ class Frame extends Component {
     }
   }
   findDisMode(routerComs, location) {
-    let curItem = routerComs.find(i => i.path == location.pathname);
+    let curItem = routerComs.find(i => i.key == location.pathname);
+    console.log(curItem)
     return curItem
-      ? curItem.displayMode ? curItem.displayMode : NOMAL_PAGE
+      ? curItem.props.displayMode ? curItem.props.displayMode : NOMAL_PAGE
       : NOMAL_PAGE;
   }
   render() {
@@ -52,8 +53,8 @@ class Frame extends Component {
       match,
       location
     } = this.props;
-    console.log(routerComs, location, "-----------------frame");
     let displayMode = this.findDisMode(routerComs, location);
+    console.log(routerComs, location, "-----------------frame", match, displayMode);
     switch (displayMode) {
       case ONLY_HEADER:
         return (
@@ -128,10 +129,9 @@ function mapStateToProps(state) {
   return {
     history: state.arena.history,
     snackbar: state.frame.snackbar,
-    // match: state.frame.match,
     userInfo: state.frame.userInfo,
     pageLoading: state.frame.pageLoading,
-    displayMode: state.frame.displayMode,
+    // displayMode: state.frame.displayMode,
     routerComs: state.frame.routerComs
   };
 }
@@ -140,4 +140,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(frameActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Frame);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Frame));
