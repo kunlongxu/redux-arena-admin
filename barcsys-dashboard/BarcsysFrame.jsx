@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import rootSaga from "./redux/saga";
-import { createArenaStore } from "../arena";
+import { createArenaStore } from "redux-arena";
 import frameState from "./redux/frameState.js";
 import { withRouter } from "react-router-dom";
-import frameReducer from "./redux/frameReducer.js";
 import Frame from "./Frame";
 import thunk from "redux-thunk";
-import saga from "./redux/saga";
 import { mergeModeRoute } from "./commons/commonFunc";
-import { initialState } from "./redux/frameReducer.js";
 import { Router } from "react-router-dom";
 import { connect } from "react-redux";
 import createHistory from "history/createBrowserHistory";
+import configureStore from "./configureStore";
 if (self === top) {
   console.log(
     "%c\
@@ -39,13 +37,8 @@ Sadlly redux is not friendly to my magical operation :(",
 }
 
 const history = createHistory();
-console.log({ frame: Object.assign({}, initialState, { history }) })
-const store = createArenaStore(
-  { frame: frameReducer },
-  { frame: Object.assign({}, initialState, { history }) },
-  saga,
-  [thunk]
-);
+const store = configureStore(history);
+
 export default class BarcsysFrame extends Component {
   componentWillMount() {
     document.getElementById("app").className = "fullHeight";

@@ -1,6 +1,6 @@
 import { fork, put } from "redux-saga/effects";
 import { delay } from "redux-saga";
-import { SCENE_SET_STATE } from "../../../arena/redux/actionTypes";
+import { SCENE_SET_STATE } from "redux-arena/redux/actionTypes";
 
 function* dynamicState() {
   while (true) {

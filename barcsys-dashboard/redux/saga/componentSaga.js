@@ -4,7 +4,7 @@ import {
   PAGE_LOAD_START, PAGE_LOAD_END, FRAME_WINDOW_RESIZE
 } from '../actionTypes'
 
-import { SCENE_LOAD_START } from "../../../arena/redux/actionTypes"
+import { SCENE_LOAD_START } from "redux-arena/redux/actionTypes"
 import { takeLatest, takeEvery, take, put, call, fork, select, cancelled, race } from 'redux-saga/effects'
 import { delay, eventChannel, END } from 'redux-saga'
 
