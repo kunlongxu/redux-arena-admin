@@ -23,6 +23,7 @@ class AdminPage extends Component {
       validateUser,
       jumpTo
     } = this.props;
+    
     if (isLoginFree) {
       return <RouteScene exact {...{ path, asyncSceneBundle }} />;
     }
