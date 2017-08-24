@@ -81,7 +81,7 @@ class LeftNav extends Component {
 function mapStateToProps(state) {
   return {
     leftNavOpenFlag: state.frame.leftNavOpenFlag,
-    history: state.arena.history,
+    history: state.frame.history,
     match: state.frame.match,
     frameSize: state.frame.frameSize,
     menusData: state.frame.menusData,

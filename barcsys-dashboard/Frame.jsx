@@ -12,13 +12,10 @@ import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;
 class Frame extends Component {
-  // static propTypes = {
-  //   history: PropTypes.object.isRequired
-  // };
-
   constructor(props) {
     super(props);
   }
+
   componentWillMount() {
     this.props.setRootRoute(this.props.rootRoute);
     // this.props.registerResizeHandler();
@@ -33,6 +30,7 @@ class Frame extends Component {
       nextProps.setRootRoute(this.props.rootRoute);
     }
   }
+
   findDisMode(routerComs, location) {
     let curItem = routerComs.find(i => i.path == location.pathname);
     return curItem
@@ -44,14 +42,10 @@ class Frame extends Component {
       rootRoute,
       userInfo,
       muiTheme,
-      pageLoading,
       routerComs,
-      match,
-      location
+      displayMode
     } = this.props;
-    let displayMode = this.findDisMode(routerComs, location);
-    console.log(displayMode,match)
-    switch (displayMode) {
+    switch (0) {
       case ONLY_HEADER:
         return (
           <div style={{ height: "100%" }}>
@@ -124,9 +118,7 @@ class Frame extends Component {
 
 function mapStateToProps(state) {
   return {
-    history: state.arena.history,
     snackbar: state.frame.snackbar,
-    pageLoading: state.frame.pageLoading,
     displayMode: state.frame.displayMode,
     routerComs: state.frame.routerComs
   };
