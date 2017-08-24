@@ -21,16 +21,19 @@ class AdminPage extends Component {
       asyncSceneBundle,
       path,
       validateUser,
-      jumpTo
+      jumpTo,
+      computedMatch,
+      location
     } = this.props;
-    
-    if (isLoginFree) {
-      return <RouteScene exact {...{ path, asyncSceneBundle }} />;
-    }
     return (
       <PrivateRouteScene
         exact
-        {...{ path, asyncSceneBundle }}
+        {...{
+          path,
+          asyncSceneBundle,
+          computedMatch,
+          location
+        }}
         onValidate={cb => validateUser(cb)}
         onPass={() => {
           console.log("User is legal.");
