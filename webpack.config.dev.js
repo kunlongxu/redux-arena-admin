@@ -21,9 +21,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      "appconfig": path.resolve(__dirname, "appconfig"),
+      appconfig: path.resolve(__dirname, "appconfig"),
       "react-arena": path.resolve(__dirname, "node_modules/react-arena"),
-      "barcsys-dashboard": path.resolve(__dirname, "barcsys-dashboard"),
+      "barcsys-dashboard": path.resolve(__dirname, "barcsys-dashboard")
     },
     extensions: [".ts", ".tsx", ".js", ".js", ".jsx"]
   },
@@ -36,12 +36,27 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          { loader: "style-loader" },
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              localIdentName: "[local]"
+            }
+          }
+        ]
       },
       {
         test: /\.less?$/,
         // exclude: /(node_modules|bower_components)/,
-        use: ["style-loader", "css-loader", "less-loader"]
+        use: [
+          { loader: "style-loader" },
+          {
+            loader: "css-loader"
+          },
+          { loader: "less-loader" }
+        ]
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,

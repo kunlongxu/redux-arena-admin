@@ -35,7 +35,6 @@ class Frame extends Component {
   }
   findDisMode(routerComs, location) {
     let curItem = routerComs.find(i => i.key == location.pathname);
-    console.log(curItem)
     return curItem
       ? curItem.props.displayMode ? curItem.props.displayMode : NOMAL_PAGE
       : NOMAL_PAGE;
@@ -51,7 +50,6 @@ class Frame extends Component {
       location
     } = this.props;
     let displayMode = this.findDisMode(routerComs, location);
-    console.log(routerComs, location, "-----------------frame", match, displayMode);
     switch (displayMode) {
       case ONLY_HEADER:
         return (

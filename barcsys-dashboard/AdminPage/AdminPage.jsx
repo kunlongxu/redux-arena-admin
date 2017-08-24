@@ -9,11 +9,9 @@ import { withRouter } from "react-router-dom";
 import { app } from "../../appconfig/settings";
 import * as actions from "./actions";
 
-@withRouter
 class AdminPage extends Component {
   onReject = () => {
     console.log("onReject");
-    sessionStorage.setItem("backUrl", window.location.pathname);
     this.props.jumpTo("/" + app.contextRoot + "/login");
   };
 
@@ -25,7 +23,6 @@ class AdminPage extends Component {
       validateUser,
       jumpTo
     } = this.props;
-    console.log(isLoginFree, path);
     if (isLoginFree) {
       return <PublicScene exact {...{ path, asyncSceneBundle }} />;
     }
@@ -35,7 +32,7 @@ class AdminPage extends Component {
         {...{ path, asyncSceneBundle }}
         onValidate={cb => validateUser(cb)}
         onPass={() => {
-          console.log("onValidate====================");
+          console.log("onPass");
         }}
         onReject={this.onReject}
       />
@@ -51,4 +48,6 @@ function mapStateToProps(state) {
   return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminPage);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AdminPage)
+);

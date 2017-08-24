@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import * as frameActions from "./redux/frameActions";
 // import MenusList from "./MenusList";
 import { app } from "appconfig/settings";
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon } from "antd";
 const { Sider } = Layout;
 
 const LogoIcon = props =>
@@ -21,7 +21,8 @@ class LeftNav extends Component {
     super(props);
   }
   jumpToPath(item, key, selectKey) {
-    this.props.history.push("/" + item.key)
+    console.log(item.key);
+    this.props.history.push("/" + item.key);
   }
   render() {
     let {
@@ -45,21 +46,25 @@ class LeftNav extends Component {
         collapsedWidth={0}
         collapsed={leftNavOpenFlag}
       >
-        <div style={{
-          height: "64px",
-          background: "#404040",
-          color: "#fff",
-          fontSize: "1rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }} >
+        <div
+          style={{
+            height: "64px",
+            background: "#404040",
+            color: "#fff",
+            fontSize: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
           新浪大数据
-          </div>
+        </div>
         <Menu
           mode="inline"
-          defaultSelectedKeys={['1']}
-          onSelect={(item, key, selectKey) => this.jumpToPath(item, key, selectKey)}>
+          defaultSelectedKeys={["1"]}
+          onSelect={(item, key, selectKey) =>
+            this.jumpToPath(item, key, selectKey)}
+        >
           <Menu.Item key="arena/app">
             <Icon type="user" />
             <span>nav 1</span>
@@ -81,7 +86,7 @@ class LeftNav extends Component {
 function mapStateToProps(state) {
   return {
     leftNavOpenFlag: state.frame.leftNavOpenFlag,
-    history: state.arena.history,
+    history: state.frame.history,
     match: state.frame.match,
     frameSize: state.frame.frameSize,
     menusData: state.frame.menusData,

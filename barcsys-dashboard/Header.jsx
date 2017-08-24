@@ -4,18 +4,18 @@ import { enhenceAction } from "./commons/actions";
 import { connect } from "react-redux";
 import * as frameActions from "./redux/frameActions";
 import headerCss from "./css/header.css";
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon } from "antd";
 const { Header } = Layout;
 class HeaderComponent extends Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   componentWillReceiveProps(nextProps) {
     let { frameSize, handleLeftNav } = nextProps;
@@ -121,14 +121,14 @@ class HeaderComponent extends Component {
             padding: "0 20px",
             cursor: "pointer"
           }}
-          type={leftNavOpenFlag ? 'menu-unfold' : 'menu-fold'}
+          type={leftNavOpenFlag ? "menu-unfold" : "menu-fold"}
           onClick={() => handleLeftNav()}
         />
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={['2']}
-          style={{ lineHeight: '64px', marginLeft: "3rem" }}
+          defaultSelectedKeys={["2"]}
+          style={{ lineHeight: "64px", marginLeft: "3rem" }}
         >
           <Menu.Item key="1">黑名单监控</Menu.Item>
           <Menu.Item key="2">反洗钱</Menu.Item>

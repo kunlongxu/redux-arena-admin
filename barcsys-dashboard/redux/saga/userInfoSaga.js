@@ -107,7 +107,6 @@ export function* loadUserInfoData({ token }) {
         call(fetchGuardianMenu, newerToken),
         call(fetchGuardianSession, newerToken)
       ]);
-      console.log("成功了");
       isUserInfoLegal = isMenuLegal && isSessionLegal;
     } else {
       yield put({
@@ -127,6 +126,7 @@ function* validUser({ cb }) {
   if (userInfo == null && isLoadingUser === false) {
     sessionStorage.setItem("backUrl", window.location.pathname);
   }
+  console.log(userInfo);
   if (userInfo != null) {
     cb(true);
   } else {

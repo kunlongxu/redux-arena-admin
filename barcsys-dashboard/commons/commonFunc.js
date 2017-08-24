@@ -5,7 +5,7 @@ import {
 import base64 from "./base64";
 import { handleSnackbar } from "../redux/frameActions";
 import LoginRoute from "../mode/login";
-// import NotMatchRoute from "../mode/NotMatch";
+import NotMatchRoute from "../mode/NotMatch";
 import OAuthCallBackRoute from "../mode/OAuthCallBack";
 
 export function serializeForm(formDom) {
@@ -61,13 +61,13 @@ export function toHex(str) {
   // }
   console.log(
     btoa(
-      encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+      encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
         return String.fromCharCode("0x" + p1);
       })
     )
   );
   return btoa(
-    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
       return String.fromCharCode("0x" + p1);
     })
   );
@@ -176,7 +176,7 @@ export function formatNum(num) {
   }
 
   tA[0] = tA[0].split(""); //拆字符
-  for (var i = tA[0].length; (i -= 3) > 0;) {
+  for (var i = tA[0].length; (i -= 3) > 0; ) {
     //插逗号
     tA[0].splice(i, 0, ",");
   }
@@ -262,7 +262,7 @@ export function mergeModeRoute(rootRoute) {
   newRootRoute.childRoutes = newRootRoute.childRoutes.concat([
     LoginRoute,
     OAuthCallBackRoute,
-    // NotMatchRoute
+    NotMatchRoute
   ]);
   return newRootRoute;
 }
