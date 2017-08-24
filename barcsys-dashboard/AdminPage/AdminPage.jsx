@@ -22,6 +22,7 @@ class AdminPage extends Component {
       jumpTo,
       ...extacProps
     } = this.props;
+    
     if (isLoginFree) {
       return (
         <RouteScene exact {...{ path, asyncSceneBundle, ...extacProps }} />

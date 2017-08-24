@@ -25,6 +25,7 @@ class RouteScene extends Component {
   };
 
   componentWillMount() {
+    console.log(this.props)
     let { arenaSwitchReducerKey } = this.context;
     invariant(
       arenaSwitchReducerKey,

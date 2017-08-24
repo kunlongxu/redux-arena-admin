@@ -44,6 +44,8 @@ class PrivateRouteScene extends Component {
       exact,
       strict,
       path,
+      location,
+      computedMatch,
       SceneValidatingComponent,
       SceneLoadingComponent,
       ...extraProps
@@ -57,8 +59,9 @@ class PrivateRouteScene extends Component {
             exact,
             strict,
             path,
-            SceneLoadingComponent,
-            ...extraProps
+            location,
+            computedMatch,
+            SceneLoadingComponent
           }}
         />
       );
