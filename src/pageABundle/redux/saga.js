@@ -1,14 +1,11 @@
 import { fork, put } from "redux-saga/effects";
 import { delay } from "redux-saga";
-import { SCENE_SET_STATE } from "redux-arena/redux/actionTypes";
+import { setSceneState } from "redux-arena/sagaOps";
 
 function* dynamicState() {
   while (true) {
     yield delay(500);
-    yield put({
-      type: SCENE_SET_STATE,
-      state: { dynamicState: Math.floor(Math.random() * 100) }
-    });
+    yield setSceneState({ dynamicState: Math.floor(Math.random() * 100) });
   }
 }
 

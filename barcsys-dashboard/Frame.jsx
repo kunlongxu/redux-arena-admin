@@ -7,18 +7,15 @@ import Header from "./Header";
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "./displayModes";
 import { Layout, Menu, Icon, Button, Progress } from "antd";
 import { withRouter } from "react-router-dom";
-import { SceneSwitch } from "redux-arena";
+import { ArenaSwitch } from "redux-arena";
 import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;
 class Frame extends Component {
-  // static propTypes = {
-  //   history: PropTypes.object.isRequired
-  // };
-
   constructor(props) {
     super(props);
   }
+
   componentWillMount() {
     this.props.setRootRoute(this.props.rootRoute);
     // this.props.registerResizeHandler();
@@ -33,6 +30,7 @@ class Frame extends Component {
       nextProps.setRootRoute(this.props.rootRoute);
     }
   }
+
   findDisMode(routerComs, location) {
     let curItem = routerComs.find(i => i.key == location.pathname);
     return curItem
@@ -40,18 +38,8 @@ class Frame extends Component {
       : NOMAL_PAGE;
   }
   render() {
-    let {
-      rootRoute,
-      userInfo,
-      muiTheme,
-      pageLoading,
-      routerComs,
-      match,
-      location
-    } = this.props;
-    let displayMode = this.findDisMode(routerComs, location);
-    console.log(displayMode,match)
-    switch (displayMode) {
+    let { rootRoute, userInfo, muiTheme, routerComs, displayMode } = this.props;
+    switch (0) {
       case ONLY_HEADER:
         return (
           <div style={{ height: "100%" }}>
@@ -71,9 +59,9 @@ class Frame extends Component {
                   minHeight: 280
                 }}
               >
-                <SceneSwitch>
+                <ArenaSwitch>
                   {routerComs}
-                </SceneSwitch>
+                </ArenaSwitch>
               </Content>
             </Layout>
           </div>
@@ -82,9 +70,9 @@ class Frame extends Component {
         return (
           <div style={{ height: "100%" }}>
             <Layout style={{ height: "100%", flexDirection: "row" }}>
-              <SceneSwitch>
+              <ArenaSwitch>
                 {routerComs}
-              </SceneSwitch>
+              </ArenaSwitch>
             </Layout>
           </div>
         );
@@ -110,9 +98,9 @@ class Frame extends Component {
                     height: "100%"
                   }}
                 >
-                  <SceneSwitch>
+                  <ArenaSwitch>
                     {routerComs}
-                  </SceneSwitch>
+                  </ArenaSwitch>
                 </Content>
               </Layout>
             </Layout>
@@ -124,10 +112,8 @@ class Frame extends Component {
 
 function mapStateToProps(state) {
   return {
-    history: state.arena.history,
     snackbar: state.frame.snackbar,
-    pageLoading: state.frame.pageLoading,
-    // displayMode: state.frame.displayMode,
+    displayMode: state.frame.displayMode,
     routerComs: state.frame.routerComs
   };
 }

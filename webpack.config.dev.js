@@ -22,7 +22,7 @@ module.exports = {
   resolve: {
     alias: {
       appconfig: path.resolve(__dirname, "appconfig"),
-      "react-arena": path.resolve(__dirname, "node_modules/react-arena"),
+      "redux-arena": path.resolve(__dirname, "arena"),
       "barcsys-dashboard": path.resolve(__dirname, "barcsys-dashboard")
     },
     extensions: [".ts", ".tsx", ".js", ".js", ".jsx"]

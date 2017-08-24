@@ -1,8 +1,7 @@
 import React from "react";
-import PublicScene from "redux-arena/PublicScene";
+import RouteScene from "redux-arena/RouteScene";
 import { FULLSCREEN } from "barcsys-dashboard/displayModes";
 import { app } from "appconfig/settings";
-
 
 export default {
   path: app.contextRoot + "/login",

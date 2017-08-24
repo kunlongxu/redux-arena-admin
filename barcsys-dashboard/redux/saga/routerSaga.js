@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Switch } from "react-router-dom";
-import AdminPage from "../../AdminPage"
-import RedirectScene from "redux-arena/RedirectScene"
+import AdminPage from "../../AdminPage";
+import ArenaRedirect from "redux-arena/ArenaRedirect";
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "../../displayModes";
 import {
   FRAME_UPDATE_REFRESH,
@@ -33,7 +33,7 @@ function buildChildren(rootRoute, parentPath, hotReplaceData) {
   }
   if (rootRoute.indexRoutePath != null) {
     children.push(
-      <RedirectScene
+      <ArenaRedirect
         key={absolutePath}
         exact
         from={absolutePath}
@@ -41,7 +41,7 @@ function buildChildren(rootRoute, parentPath, hotReplaceData) {
       />
     );
   } else if (rootRoute.asyncBundle != null) {
-    let { isLoginFree, component, name, path, asyncBundle } = rootRoute
+    let { isLoginFree, component, name, path, asyncBundle } = rootRoute;
     children.push(
       <AdminPage
         key={absolutePath}
