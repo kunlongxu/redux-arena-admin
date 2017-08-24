@@ -7,7 +7,7 @@ import Header from "./Header";
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "./displayModes";
 import { Layout, Menu, Icon, Button, Progress } from "antd";
 import { withRouter } from "react-router-dom";
-import SceneSwitch from "../arena/SceneSwitch";
+import { SceneSwitch } from "redux-arena";
 import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;
@@ -50,6 +50,7 @@ class Frame extends Component {
       location
     } = this.props;
     let displayMode = this.findDisMode(routerComs, location);
+    console.log(displayMode,match)
     switch (displayMode) {
       case ONLY_HEADER:
         return (

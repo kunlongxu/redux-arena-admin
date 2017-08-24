@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Switch } from "react-router-dom";
 import AdminPage from "../../AdminPage"
-import RedirectScene from "../../../arena/RedirectScene"
+import RedirectScene from "redux-arena/RedirectScene"
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "../../displayModes";
 import {
   FRAME_UPDATE_REFRESH,
