@@ -7,7 +7,7 @@ import Header from "./Header";
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "./displayModes";
 import { Layout, Menu, Icon, Button, Progress } from "antd";
 import { withRouter } from "react-router-dom";
-import { ArenaSwitch } from "redux-arena";
+import { ArenaSwitch } from "../redux-arena";
 import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;

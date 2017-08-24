@@ -1,5 +1,4 @@
 import React from "react";
-import RouteScene from "redux-arena/RouteScene";
 import { FULLSCREEN } from "barcsys-dashboard/displayModes";
 import { app } from "appconfig/settings";
 

@@ -7,10 +7,12 @@ import { auth } from "appconfig/settings";
 import { guardianUrl, contextRoot } from "appconfig/apiUrl";
 import { enhenceAction } from "barcsys-dashboard/commons/actions";
 import { parse as queryStringParse } from "query-string";
+import { withRouter } from "react-router-dom";
 
-export default class OAuthCallBack extends Component {
+class OAuthCallBack extends Component {
   componentWillMount() {
     let { location } = this.props;
+    console.log(location, "---------------------");
     this.checkTokenAndInitUser(location);
   }
 
@@ -21,6 +23,7 @@ export default class OAuthCallBack extends Component {
   }
 
   checkTokenAndInitUser(location) {
+    console.log(this.props, "fsfjdsjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
     let { _WEIHUIGUARDIAN_ } = queryStringParse(location.search);
     let [token1, token2] = [
       sessionStorage.getItem("X-Session-Token"),
@@ -69,3 +72,4 @@ export default class OAuthCallBack extends Component {
     );
   }
 }
+export default OAuthCallBack;

@@ -10,6 +10,6 @@ export default {
   actions,
   mapStateToProps: (state, key) => ({
     userInfo: state[key].userInfo,
-    location: state[key].location
+    location: state.frame.location
   })
 };
