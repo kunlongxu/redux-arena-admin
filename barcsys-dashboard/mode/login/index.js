@@ -1,5 +1,4 @@
 import React from "react";
-import PublicScene from "redux-arena/PublicScene";
 import { FULLSCREEN } from "barcsys-dashboard/displayModes";
 import { app } from "appconfig/settings";
 

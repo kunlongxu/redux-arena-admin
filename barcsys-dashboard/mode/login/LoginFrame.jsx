@@ -16,6 +16,7 @@ export default class LoginFrame extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <iframe
         style={{

@@ -7,7 +7,7 @@ import Header from "./Header";
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "./displayModes";
 import { Layout, Menu, Icon, Button, Progress } from "antd";
 import { withRouter } from "react-router-dom";
-import { SceneSwitch } from "redux-arena";
+import { ArenaSwitch } from "../redux-arena";
 import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;
@@ -65,9 +65,9 @@ class Frame extends Component {
                   minHeight: 280
                 }}
               >
-                <SceneSwitch>
+                <ArenaSwitch>
                   {routerComs}
-                </SceneSwitch>
+                </ArenaSwitch>
               </Content>
             </Layout>
           </div>
@@ -76,9 +76,9 @@ class Frame extends Component {
         return (
           <div style={{ height: "100%" }}>
             <Layout style={{ height: "100%", flexDirection: "row" }}>
-              <SceneSwitch>
+              <ArenaSwitch>
                 {routerComs}
-              </SceneSwitch>
+              </ArenaSwitch>
             </Layout>
           </div>
         );
@@ -104,9 +104,9 @@ class Frame extends Component {
                     height: "100%"
                   }}
                 >
-                  <SceneSwitch>
+                  <ArenaSwitch>
                     {routerComs}
-                  </SceneSwitch>
+                  </ArenaSwitch>
                 </Content>
               </Layout>
             </Layout>

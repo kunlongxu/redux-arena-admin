@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { enhenceAction } from "../commons/actions";
-import { PublicScene, PrivateScene } from "redux-arena";
+import { RouteScene, PrivateRouteScene } from "../../redux-arena";
 import { withRouter } from "react-router-dom";
 import { app } from "../../appconfig/settings";
 import * as actions from "./actions";
@@ -24,10 +24,10 @@ class AdminPage extends Component {
       jumpTo
     } = this.props;
     if (isLoginFree) {
-      return <PublicScene exact {...{ path, asyncSceneBundle }} />;
+      return <RouteScene exact {...{ path, asyncSceneBundle }} />;
     }
     return (
-      <PrivateScene
+      <PrivateRouteScene
         exact
         {...{ path, asyncSceneBundle }}
         onValidate={cb => validateUser(cb)}

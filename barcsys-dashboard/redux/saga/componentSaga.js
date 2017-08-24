@@ -15,7 +15,7 @@ import {
 import {
   SCENE_LOAD_START,
   SCENE_LOAD_END
-} from "redux-arena/redux/actionTypes";
+} from "../../../redux-arena/redux/actionTypes";
 import {
   takeLatest,
   takeEvery,
