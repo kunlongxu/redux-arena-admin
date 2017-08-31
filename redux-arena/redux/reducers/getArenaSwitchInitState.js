@@ -2,6 +2,10 @@ export default function getArenaSwitchInitState() {
   return {
     PlayingScene: null,
     curSceneBundle: {},
-    reduxInfo: {}
+    reduxInfo: {},
+    isWaiting: true,
+    // match: undefined,
+    // location: undefined,
+    // history: undefined
   };
 }

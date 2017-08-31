@@ -7,15 +7,12 @@ import {
   FRAME_SNACKBAR_CLOSE,
   FRAME_SNACKBAR_CANCEL,
   FRAME_LEFTNAVBAR,
-  PAGE_LOAD_START,
-  PAGE_LOAD_END,
   FRAME_WINDOW_RESIZE
 } from "../actionTypes";
-
 import {
-  SCENE_LOAD_START,
-  SCENE_LOAD_END
-} from "../../../redux-arena/redux/actionTypes";
+  ARENA_SWITCH_EVENT_LOADARENA_SCENE_START,
+  ARENA_SWITCH_EVENT_LOADARENA_SCENE_COMPLETE
+} from "redux-arena/actionTypes";
 import {
   takeLatest,
   takeEvery,
@@ -143,7 +140,7 @@ function* pageLoadStart() {
     while (true) {
       let { pValue, cancel } = yield race({
         pValue: take(chan),
-        cancel: take(PAGE_LOAD_END)
+        cancel: take(ARENA_SWITCH_EVENT_LOADARENA_SCENE_COMPLETE)
       });
       if (cancel) {
         yield call(pageLoadEnd);
@@ -164,8 +161,7 @@ function* pageLoadStart() {
   }
 }
 
-function* pageLoadEnd({ location, match }) {
-  console.log(location, match)
+function* pageLoadEnd() {
   yield put({
     type: FRAME_UPDATE_REFRESH,
     state: {
@@ -181,7 +177,9 @@ function* pageLoadEnd({ location, match }) {
   });
 }
 
-export function* pageLoad() {
+export function* pageLoad(action) {
+  console.log(action);
+  let { routerComs } = yield select(state => state.frame)
   messageQueue = [];
   let curTime = new Date().getTime();
   yield put({
@@ -214,20 +212,12 @@ function* leftNavbar({ flag }) {
   }
 }
 
-function* loadPageStart(action) {
-  console.log(action)
-  // let { routerComs } = yield select(state => state.arena)
-  // console.log("displayMode", location)
-}
-
 export default function* componentSaga() {
   yield takeLatest(FRAME_NAV_DIALOG, navDialog);
   yield takeEvery(FRAME_SNACKBAR_ADD, addSnackbar);
   yield fork(showSnackbar);
   yield takeLatest(FRAME_SNACKBAR_CLOSE, hideSnackbar);
   yield takeLatest(FRAME_SNACKBAR_CANCEL, cancelDelayFunc);
-  yield takeEvery(PAGE_LOAD_START, pageLoad);
+  yield takeEvery(ARENA_SWITCH_EVENT_LOADARENA_SCENE_START, pageLoad);
   yield takeLatest(FRAME_LEFTNAVBAR, leftNavbar);
-  yield takeEvery(SCENE_LOAD_START, loadPageStart);
-  yield takeEvery(SCENE_LOAD_END, pageLoadEnd);
 }

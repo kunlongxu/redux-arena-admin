@@ -5217,9 +5217,9 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux-arena@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.npmjs.org/redux-arena/-/redux-arena-0.2.2.tgz#715589f847a4d2a06ce5f17e4d3fa951e1d69671"
+redux-arena@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.npmjs.org/redux-arena/-/redux-arena-0.4.0.tgz#c26125be061c47f7fcc5c498432aa70b76999091"
   dependencies:
     prop-types "^15.5.10"
     react-redux "^5.0.5"

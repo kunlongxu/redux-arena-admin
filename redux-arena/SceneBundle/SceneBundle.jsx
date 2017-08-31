@@ -2,20 +2,43 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 export default class SceneBundle extends Component {
+  static propTypes = {
+    asyncSceneBundle: PropTypes.any,
+    sceneBundle: PropTypes.object,
+    sceneProps: PropTypes.object,
+    location: PropTypes.object,
+    history: PropTypes.object,
+    match: PropTypes.object,
+    showSwitchingLoading: PropTypes.bool,
+    SceneLoadingComponent: PropTypes.any
+  };
+
+  static childContextTypes = {
+    arenaReducerDict: PropTypes.object
+  };
+
+  getChildContext() {
+    return { arenaReducerDict: this.props.reduxInfo.arenaReducerDict };
+  }
+
   componentWillMount() {
     this.state = {
       isSceneBundleValid: false
     };
-    this.loadScene(this.props.sceneBundle, this.props.asyncSceneBundle);
+    this.loadScene(this.props);
   }
 
   componentWillUnmount() {
     let props = this.props;
     this.setState({ isSceneBundleValid: false }, () => {
-      this.props.sceneStopPlay(this.props.arenaSwitchReducerKey);
+      this.props.sceneStopPlay(
+        this.props.parentArenaReducerDict._curSwitch.reducerKey,
+        this.props.sceneBundle,
+        this.props.asyncSceneBundle
+      );
     });
     this.props.clearSceneRedux(
-      this.props.arenaSwitchReducerKey,
+      this.props.parentArenaReducerDict._curSwitch.reducerKey,
       this.props.reduxInfo
     );
   }
@@ -30,7 +53,11 @@ export default class SceneBundle extends Component {
           isSceneBundleValid: true
         },
         () => {
-          this.props.sceneStartPlay(this.props.arenaSwitchReducerKey);
+          nextProps.sceneStartPlay(
+            nextProps.parentArenaReducerDict._curSwitch.reducerKey,
+            nextProps.sceneBundle,
+            nextProps.asyncSceneBundle
+          );
         }
       );
     }
@@ -52,10 +79,10 @@ export default class SceneBundle extends Component {
           {
             isSceneBundleValid: false
           },
-          this.loadScene(sceneBundle, asyncSceneBundle)
+          this.loadScene(nextProps)
         );
       } else {
-        this.loadScene(sceneBundle, asyncSceneBundle);
+        this.loadScene(nextProps);
       }
     }
     if (nextProps.PlayingScene == null) {
@@ -65,38 +92,36 @@ export default class SceneBundle extends Component {
     }
   }
 
-  loadScene(sceneBundle, asyncSceneBundle) {
-    if (sceneBundle) {
-      let payload = [this.props.arenaSwitchReducerKey];
-      this.props.sceneLoadStart(...payload);
-      this.props.arenaSwitchLoadScene(
-        this.props.arenaSwitchReducerKey,
-        sceneBundle
+  loadScene(props) {
+    let payload = [
+      props.parentArenaReducerDict._curSwitch.reducerKey,
+      props.sceneBundle,
+      props.asyncSceneBundle
+    ];
+    if (props.sceneBundle) {
+      setImmediate(() => {
+        props.sceneLoadStart(...payload);
+        props.arenaLoadScene(props.parentArenaReducerDict, props.sceneBundle);
+        props.sceneLoadEnd(...payload);
+      });
+    } else if (props.asyncSceneBundle) {
+      setImmediate(() => {
+        props.sceneLoadStart(...payload);
+        props.arenaLoadAsyncScene(
+          props.parentArenaReducerDict,
+          props.asyncSceneBundle
+        );
+      });
+    } else {
+      throw new Error(
+        "props asyncSceneBundle and sceneBundle can not be both null"
       );
-      this.props.sceneLoadEnd(...payload);
-      return;
-    } else if (asyncSceneBundle) {
-      this.props.sceneLoadStart(this.props.arenaSwitchReducerKey);
-      this.props.arenaLoadAsyncScene(
-        this.props.arenaSwitchReducerKey,
-        asyncSceneBundle
-      );
-      return;
     }
-    throw new Error(
-      "prop asyncSceneBundle and sceneBundle can not be both null"
-    );
   }
 
   render() {
-    let { PlayingScene, SceneLoadingComponent } = this.props;
-    let {
-      match,
-      location,
-      history,
-      arenaSwitchLocation,
-      arenaSwitchMatch
-    } = this.props;
+    let { PlayingScene, SceneLoadingComponent, sceneProps } = this.props;
+    let { match, location, history } = this.props;
     if (this.state.isSceneBundleValid) {
       return (
         <PlayingScene
@@ -104,8 +129,7 @@ export default class SceneBundle extends Component {
             match,
             location,
             history,
-            arenaSwitchLocation,
-            arenaSwitchMatch
+            ...sceneProps
           }}
         />
       );
@@ -114,13 +138,3 @@ export default class SceneBundle extends Component {
     }
   }
 }
-
-SceneBundle.propTypes = {
-  asyncSceneBundle: PropTypes.any,
-  sceneBundle: PropTypes.any,
-  location: PropTypes.object,
-  computedMatch: PropTypes.object,
-  match: PropTypes.object,
-  showSwitchingLoading: PropTypes.bool,
-  SceneLoadingComponent: PropTypes.any
-};

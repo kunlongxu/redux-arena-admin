@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import RouteScene from "../RouteScene";
-import SceneValidating from "../SceneValidating";
-import SceneLoading from "../SceneLoading";
 import { REFRESH_VALIDATE, FIRST_VALADATE } from "./validateType";
 
 class PrivateRouteScene extends Component {
@@ -41,6 +39,7 @@ class PrivateRouteScene extends Component {
     let {
       asyncSceneBundle,
       sceneBundle,
+      sceneProps,
       exact,
       strict,
       path,
@@ -55,6 +54,7 @@ class PrivateRouteScene extends Component {
           {...{
             asyncSceneBundle,
             sceneBundle,
+            sceneProps,
             exact,
             strict,
             path,
@@ -64,13 +64,14 @@ class PrivateRouteScene extends Component {
           }}
         />
       );
-    return <SceneValidatingComponent />;
+    return SceneValidatingComponent ? <SceneValidatingComponent /> : <div />;
   }
 }
 
 PrivateRouteScene.propTypes = {
   asyncSceneBundle: PropTypes.any,
-  sceneBundle: PropTypes.any,
+  sceneBundle: PropTypes.object,
+  sceneProps: PropTypes.object,
   SceneLoadingComponent: PropTypes.any,
   SceneValidatingComponent: PropTypes.any,
   exact: PropTypes.bool,
@@ -82,8 +83,6 @@ PrivateRouteScene.propTypes = {
 };
 
 PrivateRouteScene.defaultProps = {
-  SceneValidatingComponent: SceneValidating,
-  SceneLoadingComponent: SceneLoading,
   exact: true
 };
 

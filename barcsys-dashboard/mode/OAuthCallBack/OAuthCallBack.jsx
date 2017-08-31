@@ -22,7 +22,6 @@ class OAuthCallBack extends Component {
   }
 
   checkTokenAndInitUser(location) {
-    console.log(this.props);
     let { _WEIHUIGUARDIAN_ } = queryStringParse(location.search);
     let [token1, token2] = [
       sessionStorage.getItem("X-Session-Token"),

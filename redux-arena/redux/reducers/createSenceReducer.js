@@ -1,29 +1,32 @@
 import {
-  SCENE_SET_STATE,
-  SCENE_REPLACE_STATE,
-  SCENE_SET_REND
+  ARENA_SCENE_SET_STATE,
+  ARENA_SCENE_REPLACE_STATE,
+  ARENA_SCENE_SET_REND
 } from "../actionTypes.js";
 import getSceneInitState from "./getSceneInitState";
 
-function reducer(state = getSceneInitState(), action, sceneKey) {
-  if (action._sceneKey !== sceneKey) return state;
+function reducer(state = getSceneInitState(), action, sceneReducerKey) {
+  if (action._sceneReducerKey !== sceneReducerKey) return state;
   switch (action.type) {
-    case SCENE_SET_STATE:
+    case ARENA_SCENE_SET_STATE:
       return Object.assign({}, state, action.state);
-    case SCENE_REPLACE_STATE:
+    case ARENA_SCENE_REPLACE_STATE:
       return Object.assign({}, action.state);
-    case SCENE_SET_REND:
+    case ARENA_SCENE_SET_REND:
       return action.state;
     default:
       return state;
   }
 }
 
-export default function createSenceReducer(extendSenceReducer, sceneKey) {
-  return function (state, action) {
+export default function createSenceReducer(
+  extendSenceReducer,
+  sceneReducerKey
+) {
+  return function(state, action) {
     if (extendSenceReducer) {
-      state = extendSenceReducer(state, action, sceneKey);
+      state = extendSenceReducer(state, action, sceneReducerKey);
     }
-    return reducer(state, action, sceneKey);
+    return reducer(state, action, sceneReducerKey);
   };
 }

@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { enhenceAction } from "../commons/actions";
-import { RouteScene, PrivateRouteScene } from "../../redux-arena";
+import { RouteScene, PrivateRouteScene } from "redux-arena";
 import { withRouter } from "react-router-dom";
 import { app } from "../../appconfig/settings";
 import * as actions from "./actions";

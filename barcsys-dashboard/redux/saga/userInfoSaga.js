@@ -69,7 +69,6 @@ function* fetchGuardianSession(token) {
       guardianAuth.session + "?token=" + token
     );
     if (code === "success") {
-      console.log("code---------");
       isSessionLegal = true;
       yield put({
         type: FRAME_UPDATE_REFRESH,
@@ -102,12 +101,10 @@ export function* loadUserInfoData({ token }) {
   } else {
     let newerToken = token;
     if (newerToken != null) {
-      console.log("load user menu and session");
       let [isMenuLegal, isSessionLegal] = yield all([
         call(fetchGuardianMenu, newerToken),
         call(fetchGuardianSession, newerToken)
       ]);
-      console.log("成功了");
       isUserInfoLegal = isMenuLegal && isSessionLegal;
     } else {
       yield put({

@@ -9,11 +9,5 @@ export default {
   reducer,
   saga,
   Component: PageA,
-  actions,
-  mapStateToProps: (state, key) => ({
-    pageA: state[key].pageA,
-    name: state[key].name,
-    dynamicState: state[key].dynamicState,
-    cnt: state[key].cnt
-  })
+  actions
 };
