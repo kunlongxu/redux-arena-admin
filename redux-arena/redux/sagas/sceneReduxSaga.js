@@ -58,11 +58,12 @@ function calcNewReduxInfo(reduxInfo, newReduxInfo, dispatch, isPlainActions) {
       newArenaReducerDict[newReduxInfo.uniqueReducerKey] = item;
     if (newReduxInfo.vReducerKey != null)
       newArenaReducerDict[newReduxInfo.vReducerKey] = item;
+    return Object.assign({}, newReduxInfo, {
+      connectedActions,
+      arenaReducerDict: newArenaReducerDict
+    });
   }
-  return Object.assign({}, newReduxInfo, {
-    connectedActions,
-    arenaReducerDict: newArenaReducerDict
-  });
+  return reduxInfo;
 }
 
 function* forkSagaWithContext(saga, ctx) {
