@@ -14,9 +14,7 @@ export default function arenaSwitchConnect(arenaReducerDict) {
     let reducerKey = arenaReducerDict._curSwitch.reducerKey;
     return {
       PlayingScene: state[reducerKey].PlayingScene,
-      curSceneBundle: state[reducerKey].curSceneBundle,
       reduxInfo: state[reducerKey].reduxInfo,
-      newArenaReducerDict: state[reducerKey].newArenaReducerDict,
       parentArenaReducerDict: arenaReducerDict
     };
   };
