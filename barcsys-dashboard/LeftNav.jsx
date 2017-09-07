@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import * as frameActions from "./redux/frameActions";
 // import MenusList from "./MenusList";
 import { app } from "appconfig/settings";
-import { Layout, Menu, Icon } from "antd";
+import { Layout, Menu, Icon, Spin } from "antd";
 const { Sider } = Layout;
 
 const LogoIcon = props =>
@@ -21,7 +21,6 @@ class LeftNav extends Component {
     super(props);
   }
   jumpToPath(item, key, selectKey) {
-    console.log(item.key);
     this.props.history.push("/" + item.key);
   }
   render() {
@@ -38,13 +37,15 @@ class LeftNav extends Component {
       setBreadcrumb,
       handleLeftNav
     } = this.props;
+    const headBackgroundUrl = require("./images/sinapaylogo.png");
     return (
       <Sider
         style={{ background: "#fff" }}
+        width="224"
         trigger={null}
         collapsible
         collapsedWidth={0}
-        collapsed={leftNavOpenFlag}
+        collapsed={!leftNavOpenFlag}
       >
         <div
           style={{
@@ -57,27 +58,43 @@ class LeftNav extends Component {
             justifyContent: "center"
           }}
         >
-          新浪大数据
+          <img src={headBackgroundUrl} alt="" height="100%" />
         </div>
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          onSelect={(item, key, selectKey) =>
-            this.jumpToPath(item, key, selectKey)}
-        >
-          <Menu.Item key="arena/app">
-            <Icon type="user" />
-            <span>nav 1</span>
-          </Menu.Item>
-          <Menu.Item key="arena/pagea">
-            <Icon type="video-camera" />
-            <span>nav 2</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Icon type="upload" />
-            <span>nav 3</span>
-          </Menu.Item>
-        </Menu>
+        {isLoadingMenu
+          ? <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "rgba(0,0,0,0.05)",
+                height: "calc(100vh - 4rem)"
+              }}
+            >
+              <Spin tip="Loading" />
+            </div>
+          : <Menu
+              mode="inline"
+              defaultSelectedKeys={["1"]}
+              onSelect={(item, key, selectKey) =>
+                this.jumpToPath(item, key, selectKey)}
+            >
+              {menusData.childRoutes.map(menu =>
+                <Menu.Item key={menusData.path + "/" + menu.path}>
+                  <Icon type="user" />
+                  <span>
+                    {menu.name}
+                  </span>
+                </Menu.Item>
+              )}
+              <Menu.Item key={"arena/pagea"}>
+                <Icon type="user" />
+                <span>pageA</span>
+              </Menu.Item>
+              <Menu.Item key={"arena/pageb"}>
+                <Icon type="user" />
+                <span>pageB</span>
+              </Menu.Item>
+            </Menu>}
       </Sider>
     );
   }

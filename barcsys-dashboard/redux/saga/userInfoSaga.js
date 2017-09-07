@@ -69,7 +69,6 @@ function* fetchGuardianSession(token) {
       guardianAuth.session + "?token=" + token
     );
     if (code === "success") {
-      console.log("code---------");
       isSessionLegal = true;
       yield put({
         type: FRAME_UPDATE_REFRESH,
@@ -102,7 +101,6 @@ export function* loadUserInfoData({ token }) {
   } else {
     let newerToken = token;
     if (newerToken != null) {
-      console.log("load user menu and session");
       let [isMenuLegal, isSessionLegal] = yield all([
         call(fetchGuardianMenu, newerToken),
         call(fetchGuardianSession, newerToken)
@@ -126,7 +124,6 @@ function* validUser({ cb }) {
   if (userInfo == null && isLoadingUser === false) {
     sessionStorage.setItem("backUrl", window.location.pathname);
   }
-  console.log(userInfo);
   if (userInfo != null) {
     cb(true);
   } else {

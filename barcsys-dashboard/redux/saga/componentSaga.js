@@ -143,7 +143,7 @@ function* pageLoadStart() {
     while (true) {
       let { pValue, cancel } = yield race({
         pValue: take(chan),
-        cancel: take(PAGE_LOAD_END)
+        cancel: take(SCENE_LOAD_END)
       });
       if (cancel) {
         yield call(pageLoadEnd);
@@ -164,8 +164,7 @@ function* pageLoadStart() {
   }
 }
 
-function* pageLoadEnd({ location, match }) {
-  console.log(location, match)
+function* pageLoadEnd() {
   yield put({
     type: FRAME_UPDATE_REFRESH,
     state: {
@@ -214,20 +213,13 @@ function* leftNavbar({ flag }) {
   }
 }
 
-function* loadPageStart(action) {
-  console.log(action)
-  // let { routerComs } = yield select(state => state.arena)
-  // console.log("displayMode", location)
-}
-
 export default function* componentSaga() {
   yield takeLatest(FRAME_NAV_DIALOG, navDialog);
   yield takeEvery(FRAME_SNACKBAR_ADD, addSnackbar);
   yield fork(showSnackbar);
   yield takeLatest(FRAME_SNACKBAR_CLOSE, hideSnackbar);
   yield takeLatest(FRAME_SNACKBAR_CANCEL, cancelDelayFunc);
-  yield takeEvery(PAGE_LOAD_START, pageLoad);
   yield takeLatest(FRAME_LEFTNAVBAR, leftNavbar);
-  yield takeEvery(SCENE_LOAD_START, loadPageStart);
-  yield takeEvery(SCENE_LOAD_END, pageLoadEnd);
+  yield takeEvery(SCENE_LOAD_START, pageLoadStart);
+  // yield takeEvery(SCENE_LOAD_END, pageLoadEnd);
 }

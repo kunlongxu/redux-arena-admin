@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import * as frameActions from "./redux/frameActions";
 import headerCss from "./css/header.css";
 import { Layout, Menu, Icon } from "antd";
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 const { Header } = Layout;
 class HeaderComponent extends Component {
   constructor(props) {
@@ -59,60 +61,7 @@ class HeaderComponent extends Component {
     } = this.props;
     let headerStyle = this.calcStyle(frameSize, leftNavOpenFlag);
     return (
-      // <div style={{ height: "4rem" }}>
-      //   <AppBar
-      //     title={breadcrumb.join("/")}
-      //     titleStyle={{ cursor: "default", WebkitUserSelect: "none" }}
-      //     style={headerStyle}
-      //     iconElementLeft={
-      //       <IconButton onClick={() => handleLeftNav()}>
-      //         <NavigationMenu />
-      //       </IconButton>
-      //     }
-      //     iconElementRight={
-      //       <IconMenu
-      //         iconButtonElement={
-      //           <IconButton>
-      //             <MoreVertIcon />
-      //           </IconButton>
-      //         }
-      //         targetOrigin={{ horizontal: "right", vertical: "top" }}
-      //         anchorOrigin={{ horizontal: "right", vertical: "top" }}
-      //       >
-      //         <MenuItem
-      //           style={{ cursor: "default", WebkitUserSelect: "none" }}
-      //           primaryText={"Loading" && userInfo && userInfo.name}
-      //         />
-      //         <MenuItem
-      //           style={{ cursor: "default", WebkitUserSelect: "none" }}
-      //           onClick={logout}
-      //           primaryText="登出"
-      //         />
-      //         <Divider />
-      //         {themeType === "light"
-      //           ? <MenuItem
-      //             style={{ cursor: "default", WebkitUserSelect: "none" }}
-      //             onClick={() => setTheme("dark")}
-      //             primaryText="切换dark主题"
-      //           />
-      //           : <MenuItem
-      //             style={{ cursor: "default", WebkitUserSelect: "none" }}
-      //             onClick={() => setTheme("light")}
-      //             primaryText="切换light主题"
-      //           />}
-      //         <MenuItem
-      //           style={{ cursor: "default", WebkitUserSelect: "none" }}
-      //           onClick={() => jumpTo("/")}
-      //           primaryText="返回首页"
-      //         />
-      //       </IconMenu>
-      //     }
-      //   >
-
-      //     <LeftNav />
-      //   </AppBar>
-      // </div>
-      <Header style={{ padding: 0, display: "flex" }}>
+      <Header style={{ padding: 0, display: "flex", zIndex: 100 }}>
         <Icon
           style={{
             alignSelf: "center",
@@ -121,7 +70,7 @@ class HeaderComponent extends Component {
             padding: "0 20px",
             cursor: "pointer"
           }}
-          type={leftNavOpenFlag ? "menu-unfold" : "menu-fold"}
+          type={leftNavOpenFlag ? "menu-fold" : "menu-unfold"}
           onClick={() => handleLeftNav()}
         />
         <Menu
@@ -134,6 +83,37 @@ class HeaderComponent extends Component {
           <Menu.Item key="2">反洗钱</Menu.Item>
           <Menu.Item key="3">微财富</Menu.Item>
         </Menu>
+        {userInfo
+          ? <Menu
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={["2"]}
+              style={{
+                lineHeight: "64px",
+                marginLeft: "3rem",
+                flex: "1 1 auto",
+                display: "flex",
+                justifyContent: "flex-end",
+                paddingRight: "1rem"
+              }}
+              onSelect={(item, key, selectKey) => {
+                item.key == "logout" && logout();
+              }}
+            >
+              <SubMenu
+                title={
+                  <span>
+                    <Icon type="user" />
+                    {userInfo && userInfo.name}
+                  </span>
+                }
+              >
+                <Menu.Item key="logout">退出</Menu.Item>
+                <Menu.Item key="setting:2">切换主题</Menu.Item>
+                <Menu.Item key="setting:3">返回首页</Menu.Item>
+              </SubMenu>
+            </Menu>
+          : null}
       </Header>
     );
   }

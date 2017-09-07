@@ -1,7 +1,18 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
-
+import {
+  Form,
+  Select,
+  InputNumber,
+  DatePicker,
+  Switch,
+  Slider,
+  Button,
+  message,
+  Row,
+  Col
+} from "antd";
 export default class PageA extends Component {
   render() {
     return (
@@ -39,6 +50,16 @@ export default class PageA extends Component {
           </tbody>
         </table>
         <button onClick={() => this.props.addCnt()}>Add Cnt</button>
+        <br />
+        <pre>
+          {JSON.stringify(this.props.userInfo, null, 2)}
+        </pre>
+        <Button size="large" type="primary" htmlType="submit">
+          确定
+        </Button>
+        <Button size="large" style={{ marginLeft: 8 }}>
+          取消
+        </Button>
       </div>
     );
   }

@@ -25,7 +25,6 @@ class RouteScene extends Component {
   };
 
   componentWillMount() {
-    console.log(this.props)
     let { arenaSwitchReducerKey } = this.context;
     invariant(
       arenaSwitchReducerKey,
@@ -39,7 +38,6 @@ class RouteScene extends Component {
       computedMatch
     } = this.props;
     let wrappedSceneBundle = arenaSwitchConnect(arenaSwitchReducerKey);
-    console.log(location, computedMatch, asyncSceneBundle);
     let sceneBundleElement = React.createElement(wrappedSceneBundle, {
       asyncSceneBundle,
       sceneBundle,

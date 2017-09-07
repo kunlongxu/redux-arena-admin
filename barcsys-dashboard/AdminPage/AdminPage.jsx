@@ -22,7 +22,7 @@ class AdminPage extends Component {
       jumpTo,
       ...extacProps
     } = this.props;
-    
+
     if (isLoginFree) {
       return (
         <RouteScene exact {...{ path, asyncSceneBundle, ...extacProps }} />
@@ -33,9 +33,7 @@ class AdminPage extends Component {
         exact
         {...{ path, asyncSceneBundle, ...extacProps }}
         onValidate={cb => validateUser(cb)}
-        onPass={() => {
-          console.log("User is legal.");
-        }}
+        onPass={() => {}}
         onReject={this.onReject}
       />
     );

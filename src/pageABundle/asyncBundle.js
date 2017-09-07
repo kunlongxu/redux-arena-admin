@@ -14,6 +14,7 @@ export default {
     pageA: state[key].pageA,
     name: state[key].name,
     dynamicState: state[key].dynamicState,
-    cnt: state[key].cnt
+    cnt: state[key].cnt,
+    userInfo: state.frame.userInfo
   })
 };

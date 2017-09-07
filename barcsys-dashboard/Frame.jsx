@@ -37,18 +37,31 @@ class Frame extends Component {
       ? curItem.props.displayMode ? curItem.props.displayMode : NOMAL_PAGE
       : NOMAL_PAGE;
   }
+  rendProgress({ loadFlag, progress }) {
+    return loadFlag
+      ? <Progress
+          strokeWidth={3}
+          percent={progress}
+          showInfo={false}
+          status="active"
+          style={{ position: "absolute", zIndex: 101, fontSize: 0 }}
+        />
+      : null;
+  }
   render() {
-    let { rootRoute, userInfo, muiTheme, routerComs, displayMode } = this.props;
+    let {
+      rootRoute,
+      userInfo,
+      muiTheme,
+      routerComs,
+      displayMode,
+      pageLoading
+    } = this.props;
     switch (0) {
       case ONLY_HEADER:
         return (
           <div style={{ height: "100%" }}>
-            <Progress
-              strokeWidth={2}
-              percent={40}
-              showInfo={false}
-              style={{ position: "absolute", zIndex: 99, fontSize: 0 }}
-            />
+            {this.rendProgress(pageLoading)}
             <Layout style={{ height: "100%", flexDirection: "row" }}>
               <Header />
               <Content
@@ -69,6 +82,7 @@ class Frame extends Component {
       case FULLSCREEN:
         return (
           <div style={{ height: "100%" }}>
+            {this.rendProgress(pageLoading)}
             <Layout style={{ height: "100%", flexDirection: "row" }}>
               <ArenaSwitch>
                 {routerComs}
@@ -79,12 +93,7 @@ class Frame extends Component {
       default:
         return (
           <div style={{ height: "100%" }}>
-            <Progress
-              strokeWidth={2}
-              percent={40}
-              showInfo={false}
-              style={{ position: "absolute", zIndex: 99, fontSize: 0 }}
-            />
+            {this.rendProgress(pageLoading)}
             <Layout style={{ height: "100%", flexDirection: "row" }}>
               <LeftNav />
               <Layout>
@@ -114,7 +123,8 @@ function mapStateToProps(state) {
   return {
     snackbar: state.frame.snackbar,
     displayMode: state.frame.displayMode,
-    routerComs: state.frame.routerComs
+    routerComs: state.frame.routerComs,
+    pageLoading: state.frame.pageLoading
   };
 }
 

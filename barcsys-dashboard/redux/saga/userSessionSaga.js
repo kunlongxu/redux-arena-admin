@@ -30,7 +30,15 @@ function* userLogout() {
     yield take(FRAME_USER_LOGOUT);
     let token = sessionStorage.getItem("X-Session-Token");
     sessionStorage.removeItem("X-Session-Token");
-    window.location = guardianUrl + "/logout?token=" + token;
+    window.location.href =
+      guardianUrl +
+      "/logout/" +
+      token +
+      "?returnUrl=http://" +
+      window.location.host +
+      "/" +
+      app.contextRoot +
+      "/login";
   }
 }
 
@@ -47,6 +55,6 @@ function* tockenError() {
 }
 
 export default function* userSessionSaga() {
-  yield 
+  yield;
   yield all([fork(tockenError), fork(userLogin), fork(userLogout)]);
 }

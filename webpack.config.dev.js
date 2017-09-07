@@ -3,6 +3,13 @@ var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
+// import { existsSync } from "fs";
+var { existsSync } = require("fs");
+const pkg = existsSync(path.join("package.json"))
+  ? require("./package.json")
+  : {};
+const getThemeConfig = require(pkg.theme);
+let theme = getThemeConfig();
 
 module.exports = {
   devtool: "inline-source-map",
@@ -48,14 +55,25 @@ module.exports = {
         ]
       },
       {
-        test: /\.less?$/,
+        test: /\.less$/,
         // exclude: /(node_modules|bower_components)/,
         use: [
           { loader: "style-loader" },
           {
-            loader: "css-loader"
+            loader: "css-loader",
+            options: {
+              modules: true
+            }
           },
-          { loader: "less-loader" }
+          {
+            loader: "less-loader",
+            options: {
+              modifyVars: JSON.stringify(theme)
+            }
+          },
+          {
+            loader: "postcss-loader"
+          }
         ]
       },
       {

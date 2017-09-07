@@ -26,9 +26,7 @@ function* initUserAndJump({ token, backUrl }) {
       isUserLegal: "pending"
     }
   });
-  console.log("isUserLegal", 123);
   let isUserLegal = yield* loadUserInfoData({ token });
-  console.log("isUserLegal", isUserLegal);
   if (isUserLegal) {
     sessionStorage.setItem("X-Session-Token", token);
     sessionStorage.removeItem("backUrl");

@@ -9,7 +9,7 @@ export default {
   Component: LoginFrame,
   actions,
   mapStateToProps: (state, key) => ({
-    userInfo: state[key].userInfo,
+    userInfo: state.frame.userInfo,
     location: state.frame.location
   })
 };
