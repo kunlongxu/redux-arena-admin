@@ -7,15 +7,12 @@ import {
   FRAME_SNACKBAR_CLOSE,
   FRAME_SNACKBAR_CANCEL,
   FRAME_LEFTNAVBAR,
-  PAGE_LOAD_START,
-  PAGE_LOAD_END,
   FRAME_WINDOW_RESIZE
 } from "../actionTypes";
-
 import {
-  SCENE_LOAD_START,
-  SCENE_LOAD_END
-} from "../../../redux-arena/redux/actionTypes";
+  ARENA_SWITCH_EVENT_LOADARENA_SCENE_START,
+  ARENA_SWITCH_EVENT_LOADARENA_SCENE_COMPLETE
+} from "redux-arena/actionTypes";
 import {
   takeLatest,
   takeEvery,
@@ -143,7 +140,7 @@ function* pageLoadStart() {
     while (true) {
       let { pValue, cancel } = yield race({
         pValue: take(chan),
-        cancel: take(SCENE_LOAD_END)
+        cancel: take(ARENA_SWITCH_EVENT_LOADARENA_SCENE_COMPLETE)
       });
       if (cancel) {
         yield call(pageLoadEnd);
@@ -180,7 +177,9 @@ function* pageLoadEnd() {
   });
 }
 
-export function* pageLoad() {
+export function* pageLoad(action) {
+  console.log(action);
+  let { routerComs } = yield select(state => state.frame);
   messageQueue = [];
   let curTime = new Date().getTime();
   yield put({
@@ -219,7 +218,6 @@ export default function* componentSaga() {
   yield fork(showSnackbar);
   yield takeLatest(FRAME_SNACKBAR_CLOSE, hideSnackbar);
   yield takeLatest(FRAME_SNACKBAR_CANCEL, cancelDelayFunc);
+  yield takeEvery(ARENA_SWITCH_EVENT_LOADARENA_SCENE_START, pageLoad);
   yield takeLatest(FRAME_LEFTNAVBAR, leftNavbar);
-  yield takeEvery(SCENE_LOAD_START, pageLoadStart);
-  // yield takeEvery(SCENE_LOAD_END, pageLoadEnd);
 }

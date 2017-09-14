@@ -1,11 +1,12 @@
-import { put, getContext } from "redux-saga/effects";
-import { SCENE_SET_STATE } from "../redux/actionTypes";
+import { put } from "redux-saga/effects";
+import getArenaReducerDictEntry from "./getArenaReducerDictEntry";
+import { ARENA_SCENE_SET_STATE } from "../core/actionTypes";
 
-export default function* setSceneState(state) {
-  let sceneKey = yield getContext("sceneKey");
+export default function* setSceneState(state, key = "_curScene") {
+  let entry = yield* getArenaReducerDictEntry(key);
   yield put({
-    type: SCENE_SET_STATE,
-    _sceneKey: sceneKey,
+    type: ARENA_SCENE_SET_STATE,
+    _sceneReducerKey: entry.reducerKey,
     state
   });
 }

@@ -1,0 +1,2 @@
+export const LOAD_APPDATA = "LOAD_APPDATA";
+export const LOAD_TAPEDATA = "LOAD_TAPEDATA";

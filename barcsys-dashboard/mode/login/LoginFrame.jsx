@@ -5,14 +5,10 @@ import { guardianOAuthUrl } from "appconfig/apiUrl";
 import { app } from "appconfig/settings";
 
 export default class LoginFrame extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     let token = sessionStorage.getItem("X-Session-Token");
-    this.props.initUserAndJump(token);
-    window.initUserAndJump = this.props.initUserAndJump;
+    this.props.actions.initUserAndJump(token);
+    window.initUserAndJump = this.props.actions.initUserAndJump;
   }
 
   render() {

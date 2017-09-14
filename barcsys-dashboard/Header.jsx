@@ -71,7 +71,7 @@ class HeaderComponent extends Component {
             cursor: "pointer"
           }}
           type={leftNavOpenFlag ? "menu-fold" : "menu-unfold"}
-          onClick={() => handleLeftNav()}
+          onClick={leftNavOpenFlag ? this.closeDrawer : this.openDrawer}
         />
         <Menu
           theme="dark"
@@ -83,37 +83,40 @@ class HeaderComponent extends Component {
           <Menu.Item key="2">反洗钱</Menu.Item>
           <Menu.Item key="3">微财富</Menu.Item>
         </Menu>
-        {userInfo
-          ? <Menu
-              theme="dark"
-              mode="horizontal"
-              defaultSelectedKeys={["2"]}
-              style={{
-                lineHeight: "64px",
-                marginLeft: "3rem",
-                flex: "1 1 auto",
-                display: "flex",
-                justifyContent: "flex-end",
-                paddingRight: "1rem"
-              }}
-              onSelect={(item, key, selectKey) => {
-                item.key == "logout" && logout();
-              }}
-            >
-              <SubMenu
-                title={
-                  <span>
-                    <Icon type="user" />
-                    {userInfo && userInfo.name}
-                  </span>
-                }
-              >
-                <Menu.Item key="logout">退出</Menu.Item>
-                <Menu.Item key="setting:2">切换主题</Menu.Item>
-                <Menu.Item key="setting:3">返回首页</Menu.Item>
-              </SubMenu>
-            </Menu>
-          : null}
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={["2"]}
+          style={{
+            lineHeight: "64px",
+            marginLeft: "3rem",
+            flex: "1 1 auto",
+            display: "flex",
+            justifyContent: "flex-end",
+            paddingRight: "1rem"
+          }}
+          onSelect={(item, key, selectKey) => {
+            item.key == "logout" && frameActions.logout();
+            item.key == "darkTheme" && themeActions.applyDarkTheme();
+            item.key == "lightTheme" && frameActions.applyLightTheme();
+          }}
+        >
+          <SubMenu
+            title={
+              <span>
+                <Icon type="user" />
+                {userInfo && userInfo.name}
+              </span>
+            }
+          >
+            <Menu.Item key="logout">退出</Menu.Item>
+            {themeType === LIGHT_THEME ? (
+              <Menu.Item key="darkTheme">切换dark主题</Menu.Item>
+            ) : (
+              <Menu.Item key="lightTheme">切换light主题</Menu.Item>
+            )}
+          </SubMenu>
+        </Menu>
       </Header>
     );
   }

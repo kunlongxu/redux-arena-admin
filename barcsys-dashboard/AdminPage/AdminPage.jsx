@@ -3,7 +3,8 @@ import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { enhenceAction } from "../commons/actions";
-import { RouteScene, PrivateRouteScene } from "../../redux-arena";
+import { RouteScene, PrivateRouteScene } from "redux-arena";
+import { withRouter } from "react-router-dom";
 import { app } from "../../appconfig/settings";
 import * as actions from "./actions";
 
@@ -20,18 +21,18 @@ class AdminPage extends Component {
       path,
       validateUser,
       jumpTo,
-      ...extacProps
+      computedMatch,
+      location
     } = this.props;
-
-    if (isLoginFree) {
-      return (
-        <RouteScene exact {...{ path, asyncSceneBundle, ...extacProps }} />
-      );
-    }
     return (
       <PrivateRouteScene
         exact
-        {...{ path, asyncSceneBundle, ...extacProps }}
+        {...{
+          path,
+          asyncSceneBundle,
+          computedMatch,
+          location
+        }}
         onValidate={cb => validateUser(cb)}
         onPass={() => {}}
         onReject={this.onReject}

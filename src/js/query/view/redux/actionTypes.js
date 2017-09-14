@@ -1,0 +1,5 @@
+const TAPE_LOAD_LOGS = 'TAPE_LOAD_LOGS'
+
+export {
+  TAPE_LOAD_LOGS
+}

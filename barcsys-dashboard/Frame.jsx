@@ -7,7 +7,7 @@ import Header from "./Header";
 import { NOMAL_PAGE, FULLSCREEN, ONLY_HEADER } from "./displayModes";
 import { Layout, Menu, Icon, Button, Progress } from "antd";
 import { withRouter } from "react-router-dom";
-import { ArenaSwitch } from "../redux-arena";
+import { ArenaSwitch } from "redux-arena";
 import LeftNav from "./LeftNav";
 
 const { Sider, Content } = Layout;
@@ -37,16 +37,16 @@ class Frame extends Component {
       ? curItem.props.displayMode ? curItem.props.displayMode : NOMAL_PAGE
       : NOMAL_PAGE;
   }
-  rendProgress({ loadFlag, progress }) {
-    return loadFlag
-      ? <Progress
-          strokeWidth={3}
-          percent={progress}
-          showInfo={false}
-          status="active"
-          style={{ position: "absolute", zIndex: 101, fontSize: 0 }}
-        />
-      : null;
+
+  rendLoadingBar(pageLoading) {
+    return pageLoading.loadFlag ? (
+      <Progress
+        strokeWidth={2}
+        percent={pageLoading.progress}
+        showInfo={false}
+        style={{ position: "absolute", zIndex: 99, fontSize: 0 }}
+      />
+    ) : null;
   }
   render() {
     let {
@@ -61,7 +61,7 @@ class Frame extends Component {
       case ONLY_HEADER:
         return (
           <div style={{ height: "100%" }}>
-            {this.rendProgress(pageLoading)}
+            {this.rendLoadingBar(pageLoading)}
             <Layout style={{ height: "100%", flexDirection: "row" }}>
               <Header />
               <Content
@@ -72,9 +72,7 @@ class Frame extends Component {
                   minHeight: 280
                 }}
               >
-                <ArenaSwitch>
-                  {routerComs}
-                </ArenaSwitch>
+                <ArenaSwitch>{routerComs}</ArenaSwitch>
               </Content>
             </Layout>
           </div>
@@ -82,18 +80,16 @@ class Frame extends Component {
       case FULLSCREEN:
         return (
           <div style={{ height: "100%" }}>
-            {this.rendProgress(pageLoading)}
+            {this.rendLoadingBar(pageLoading)}
             <Layout style={{ height: "100%", flexDirection: "row" }}>
-              <ArenaSwitch>
-                {routerComs}
-              </ArenaSwitch>
+              <ArenaSwitch>{routerComs}</ArenaSwitch>
             </Layout>
           </div>
         );
       default:
         return (
           <div style={{ height: "100%" }}>
-            {this.rendProgress(pageLoading)}
+            {this.rendLoadingBar(pageLoading)}
             <Layout style={{ height: "100%", flexDirection: "row" }}>
               <LeftNav />
               <Layout>
@@ -107,9 +103,7 @@ class Frame extends Component {
                     height: "100%"
                   }}
                 >
-                  <ArenaSwitch>
-                    {routerComs}
-                  </ArenaSwitch>
+                  <ArenaSwitch>{routerComs}</ArenaSwitch>
                 </Content>
               </Layout>
             </Layout>

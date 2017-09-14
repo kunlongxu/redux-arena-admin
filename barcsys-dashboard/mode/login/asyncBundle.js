@@ -7,9 +7,5 @@ export default {
   state,
   saga,
   Component: LoginFrame,
-  actions,
-  mapStateToProps: (state, key) => ({
-    userInfo: state.frame.userInfo,
-    location: state.frame.location
-  })
+  actions
 };

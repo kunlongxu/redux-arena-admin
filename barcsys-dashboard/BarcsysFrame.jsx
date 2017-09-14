@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import rootSaga from "./redux/saga";
-import { createArenaStore } from "../redux-arena";
 import frameState from "./redux/frameState.js";
 import Frame from "./Frame";
 import thunk from "redux-thunk";
